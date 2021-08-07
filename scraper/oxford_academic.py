@@ -71,6 +71,5 @@ def scrape_review_of_financial_studies(cwd):
             except:
                 continue
             break
-        print(df)
 
     df.to_csv(f'{cwd}/data/review_of_financial_studies.csv', index=False)
