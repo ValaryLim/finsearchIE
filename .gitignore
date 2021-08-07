@@ -1,0 +1,4 @@
+data/
+config.json
+*ipynb
+*__pycache__/
