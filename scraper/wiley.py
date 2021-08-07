@@ -14,7 +14,7 @@ def scrape_journal_of_finance(cwd):
                 
     for volume_no in tqdm.tqdm(range(min_volume_no, max_volume_no)):
         for issue_no in range(1, 7):
-            volume_year = min_year + volume_no - min_volume_no - 1
+            volume_year = min_year + volume_no - min_volume_no
             try:
                 issue_page = requests.get(f'https://onlinelibrary.wiley.com/toc/15406261/{str(volume_year)}/{str(volume_no)}/{str(issue_no)}', 
                                     headers=headers)
@@ -35,7 +35,6 @@ def scrape_journal_of_finance(cwd):
                         article_soup = BeautifulSoup(article_page.content, features="html.parser")
                         abstract = article_soup.find('div', {'class': 'article-section__content'}).p.text
                         abstract = " ".join(abstract.strip().split())
-                        
                         df = df.append(
                             {'abstract': abstract, 'authors': authors, 'title': title, 'doi': doi, \
                             'date': date, 'journal':'Journal of Finance'}, \

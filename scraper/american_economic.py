@@ -29,6 +29,9 @@ def scrape_american_economics_review(cwd):
     df = pd.DataFrame()
     for article in tqdm.tqdm(articles):
         try:
+            # retrieve article details
+            article_response = requests.get(article)
+            article_soup = BeautifulSoup(article_response.content, features='html.parser')
             title = article_soup.find('meta', {'name': 'citation_title'})['content']
             authors = article_soup.find('ul', {'class': 'attribution'}).findAll('li', {'class': 'author'})
             authors = [x.text.strip() for x in authors]
