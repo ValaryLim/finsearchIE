@@ -1,0 +1,180 @@
+2022-01-24 22:48:46,643 loading vocabulary file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model/vocab.txt
+2022-01-24 22:48:46,705 loading archive file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model from cache at /Users/valarylim/financeOpenIE/finsearch_backend/fin_model
+2022-01-24 22:48:46,706 Model config {
+  "attention_probs_dropout_prob": 0.1,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "max_position_embeddings": 512,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "type_vocab_size": 2,
+  "vocab_size": 30522
+}
+
+2022-01-24 22:48:53,628 Initialization Done !!
+2022-01-24 22:48:54,116  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-01-24 22:48:58,110 127.0.0.1 - - [24/Jan/2022 22:48:58] "GET /?entity1=economic%20growth&amp;entity2=interest%20rate HTTP/1.1" 200 -
+2022-01-24 22:49:05,393 Taking last layer embedding of each word.
+2022-01-24 22:49:05,394 Mean of all words for sentence embedding.
+2022-01-24 22:49:05,541 Shape of Sentence Embeddings = 768
+2022-01-24 22:49:05,543 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+    e2_embedding = encode_entity(clean_entity(e2))
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:49:05,547 127.0.0.1 - - [24/Jan/2022 22:49:05] "[35m[1mGET /search?entity1=economic%20growth&amp;entity2=interest%20rate HTTP/1.1[0m" 500 -
+2022-01-24 22:49:40,841 Taking last layer embedding of each word.
+2022-01-24 22:49:40,843 Mean of all words for sentence embedding.
+2022-01-24 22:49:40,994 Shape of Sentence Embeddings = 768
+2022-01-24 22:49:40,995 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:49:40,996 127.0.0.1 - - [24/Jan/2022 22:49:40] "[35m[1mGET /search?entity1=economic%20growth&amp;entity2=interest%20rate HTTP/1.1[0m" 500 -
+2022-01-24 22:49:52,649 Taking last layer embedding of each word.
+2022-01-24 22:49:52,654 Mean of all words for sentence embedding.
+2022-01-24 22:49:52,786 Shape of Sentence Embeddings = 768
+2022-01-24 22:49:52,786 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:49:52,787 127.0.0.1 - - [24/Jan/2022 22:49:52] "[35m[1mGET /search?entity1=economic%20growth&amp;entity2=interest%20rate HTTP/1.1[0m" 500 -
+2022-01-24 22:49:54,553 127.0.0.1 - - [24/Jan/2022 22:49:54] "GET / HTTP/1.1" 200 -
+2022-01-24 22:50:02,190 Taking last layer embedding of each word.
+2022-01-24 22:50:02,190 Mean of all words for sentence embedding.
+2022-01-24 22:50:02,326 Shape of Sentence Embeddings = 768
+2022-01-24 22:50:02,327 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:50:02,328 127.0.0.1 - - [24/Jan/2022 22:50:02] "[35m[1mGET /search?entity1=economic%20growth&amp;entity2=interest%20rate HTTP/1.1[0m" 500 -
+2022-01-24 22:50:07,116 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 37, in search_query
+    e2_embedding = encode_entity(clean_entity(e2))
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:50:07,120 127.0.0.1 - - [24/Jan/2022 22:50:07] "[35m[1mGET /search HTTP/1.1[0m" 500 -
+2022-01-24 22:50:29,539 Taking last layer embedding of each word.
+2022-01-24 22:50:29,541 Mean of all words for sentence embedding.
+2022-01-24 22:50:29,695 Shape of Sentence Embeddings = 768
+2022-01-24 22:50:29,696 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:50:29,697 127.0.0.1 - - [24/Jan/2022 22:50:29] "[35m[1mGET /search?entity1=Sergio&amp;entity2=forty HTTP/1.1[0m" 500 -
+2022-01-24 22:51:09,330 Taking last layer embedding of each word.
+2022-01-24 22:51:09,332 Mean of all words for sentence embedding.
+2022-01-24 22:51:09,704 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:09,705 Exception on /search [GET]
+Traceback (most recent call last):
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/valarylim/opt/anaconda3/envs/finsearch/lib/python3.7/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/app.py", line 15, in search
+    query_result = query.search_query(entity1, entity2)
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 38, in search_query
+  File "/Users/valarylim/financeOpenIE/finsearch_backend/query.py", line 33, in clean_entity
+    return text.strip().lower()
+AttributeError: 'NoneType' object has no attribute 'strip'
+2022-01-24 22:51:09,705 127.0.0.1 - - [24/Jan/2022 22:51:09] "[35m[1mGET /search?entity1=Sergio&;entity2=forty HTTP/1.1[0m" 500 -
+2022-01-24 22:51:12,071 Taking last layer embedding of each word.
+2022-01-24 22:51:12,071 Mean of all words for sentence embedding.
+2022-01-24 22:51:12,219 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:12,219 Taking last layer embedding of each word.
+2022-01-24 22:51:12,220 Mean of all words for sentence embedding.
+2022-01-24 22:51:12,378 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:12,597 127.0.0.1 - - [24/Jan/2022 22:51:12] "GET /search?entity1=Sergio&entity2=forty HTTP/1.1" 200 -
+2022-01-24 22:51:25,525 Taking last layer embedding of each word.
+2022-01-24 22:51:25,526 Mean of all words for sentence embedding.
+2022-01-24 22:51:25,663 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:25,663 Taking last layer embedding of each word.
+2022-01-24 22:51:25,663 Mean of all words for sentence embedding.
+2022-01-24 22:51:25,754 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:25,909 127.0.0.1 - - [24/Jan/2022 22:51:25] "GET /search?entity1=economic%20growth&entity2=forty HTTP/1.1" 200 -
+2022-01-24 22:51:32,306 Taking last layer embedding of each word.
+2022-01-24 22:51:32,306 Mean of all words for sentence embedding.
+2022-01-24 22:51:32,448 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:32,448 Taking last layer embedding of each word.
+2022-01-24 22:51:32,448 Mean of all words for sentence embedding.
+2022-01-24 22:51:32,544 Shape of Sentence Embeddings = 768
+2022-01-24 22:51:32,708 127.0.0.1 - - [24/Jan/2022 22:51:32] "GET /search?entity1=economic%20growth&entity2=interest%20rate HTTP/1.1" 200 -
