@@ -38,6 +38,7 @@ def search():
     response_object = { "status": "success" }
     # query
     post_data = request.get_json()
+    print(post_data)
     entity1 = post_data.get('entity1')
     entity2 = post_data.get('entity2')
     search_results = query.search_query(entity1, entity2)
