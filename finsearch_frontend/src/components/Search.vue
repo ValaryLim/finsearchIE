@@ -21,6 +21,32 @@
     <div id="results">
         <h3>Results</h3>
         <p>{{ results }}</p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Entity 1</th>
+                    <th scope="col">Entity 2</th>
+                    <th scope="col">Relation</th>
+                    <th scope="col">Relation Score</th>
+                    <th scope="col">Abstract</th>
+                    <th scope="col">Article</th>
+                    <th scope="col">Authors</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(article, index) in results" :key="index">
+                    <td>{{ article.closest_relation.e1 }}</td>
+                    <td>{{ article.closest_relation.e2 }}</td>
+                    <td>{{ article.closest_relation.relation }}</td>
+                    <td>{{ article.relation_score }}</td>
+                    <td>{{ article.sentences }}</td>
+                    <td><a v-bind:href="'https://doi.org/'+ article.doi">{{ article.title }}</a></td>
+                    <td>{{ article.authors }}</td>
+                    <td>{{ article.date }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     </div>
@@ -53,6 +79,7 @@ export default {
             };
             axios.post(path, search_query).then(response => {
                 this.results = response.data.results
+                console.log(response + " got response")
             }).catch((error) => {
                 console.error(error);
             });

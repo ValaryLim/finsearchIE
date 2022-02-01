@@ -45,6 +45,7 @@ class Abstract:
         self.doc_key = doc_key 
         self.relation_score = -1
         self.relations = []
+        self.closest_relation = None
 
         # Load extra information
         self.sentences = FINKB_SENTENCES[str(self.doc_key)]
@@ -61,19 +62,19 @@ class Abstract:
 
     def get_doc_key(self):
         return self.doc_key
-
-    def update_relation_score(self, relation):
-        self.relation_score = max(self.relation_score, relation.get_relation_score())
     
     def add_relation(self, new_relation, new_relation_score):
         # create new relation
         new_relation_obj = Relation(new_relation, new_relation_score)
 
         # update relation score
-        self.update_relation_score(new_relation_obj)
+        if self.relation_score < new_relation_score:
+            self.closest_relation = new_relation_obj
+            self.relation_score = new_relation_score
 
         # add relation
         self.relations.append(new_relation_obj)
+
 
     def __lt__(self, other):
         return self.get_relation_score() < other.get_relation_score()
@@ -83,6 +84,7 @@ class Abstract:
             "doc_key": self.get_doc_key(), 
             "relation_score": self.get_relation_score(), 
             "relations": [x.to_dict() for x in self.relations],
+            "closest_relation": self.closest_relation.to_dict(),
             "authors": self.authors,
             "sentences": self.sentences,
             "title": self.title,
