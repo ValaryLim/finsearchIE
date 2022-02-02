@@ -19,4 +19,9 @@ export default {
   color: #2c3e50;
   margin: 30px;
 }
+
+.v-data-table-header th { 
+  /* used to align table */
+  white-space: nowrap;
+}
 </style>

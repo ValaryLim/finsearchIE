@@ -1,54 +1,143 @@
 <template>
   <div class="search">
-    <b-form @submit="submit">
-        <b-input-group prepend="Entity 1" class="mb-2 mr-sm-2 mb-sm-0">
-            <b-form-input id="entity1" class="mb-2 mr-sm-2 mb-sm-0" type="text" placeholder="economic growth" v-model="form.entity1" required></b-form-input>
-        </b-input-group>
+    <v-app id="search">
+        <div id="form">
+        <v-form @submit="submit" v-model="form.valid">
+            <v-container>
+                <v-row>
+                    <v-col cols="12" md="6">
+                        <v-text-field
+                            v-model="form.entity1"
+                            :rules="form.rules.required"
+                            color="primary"
+                            label="Entity 1"
+                            placeholder="Economic growth"
+                            type="text"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                        <v-text-field
+                            v-model="form.entity2"
+                            :rules="form.rules.required"
+                            color="primary"
+                            label="Entity 2"
+                            placeholder="Interest rates"
+                            type="text"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12" md="4">
+                        <v-slider
+                            v-model="form.threshold"
+                            step="0.1"
+                            ticks="always"
+                            tick-size="5" thumb-label
+                            min="0" max="1"
+                            :label="'Threshold'"
+                        >
+                            <template v-slot:append>
+                            <v-text-field
+                                v-model="form.threshold"
+                                class="mt-0 mb-0 pt-0"
+                                type="number"
+                                style="width:50px"
+                            ></v-text-field>
+                            </template>
+                        </v-slider>
+                    </v-col>
+                    <v-col cols="12" md="1"></v-col>
+                    <v-col cols="12" md="3">
+                        <v-switch 
+                            inset color="primary" 
+                            v-model="form.direction" 
+                            :label="directionToggle()"
+                            class="mt-0 pt-0"
+                        ></v-switch>
+                    </v-col>
+                    <v-col cols="12" md="2">
+                        <v-switch 
+                            inset color="primary" 
+                            v-model="form.granular" 
+                            :label="granularToggle()"
+                            class="mt-0 pt-0"
+                        ></v-switch>
+                    </v-col>
+                    <v-col cols="12" md="3"></v-col>
+                </v-row>
+                <v-row>
+                    <v-btn id="submit" :disabled="!form.valid" type="submit" color="primary" elevation="2" large rounded>
+                        Search
+                    </v-btn>
+                </v-row>
+            </v-container>
+        </v-form>
+        </div>
         <br>
-        <b-input-group prepend="Entity 2" class="mb-2 mr-sm-2 mb-sm-0">
-            <b-form-input id="entity2" type="text" placeholder="interest rates" v-model="form.entity2" required></b-form-input>
-        </b-input-group>
         <br>
-        <b-button id="submit" variant="dark" type="submit">Search</b-button>
-    </b-form>
-    <br>
-    <div id="entity-display">
-        <p>Entity 1: {{ form.entity1 }}</p>
-        <p>Entity 2: {{ form.entity2 }}</p>
-    </div>
-    <br>
+        <br>
 
-    <div id="results">
-        <h3>Results</h3>
-        <p>{{ results }}</p>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Entity 1</th>
-                    <th scope="col">Entity 2</th>
-                    <th scope="col">Relation</th>
-                    <th scope="col">Relation Score</th>
-                    <th scope="col">Abstract</th>
-                    <th scope="col">Article</th>
-                    <th scope="col">Authors</th>
-                    <th scope="col">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(article, index) in results" :key="index">
-                    <td>{{ article.closest_relation.e1 }}</td>
-                    <td>{{ article.closest_relation.e2 }}</td>
-                    <td>{{ article.closest_relation.relation }}</td>
-                    <td>{{ article.relation_score }}</td>
-                    <td>{{ article.sentences }}</td>
-                    <td><a v-bind:href="'https://doi.org/'+ article.doi">{{ article.title }}</a></td>
-                    <td>{{ article.authors }}</td>
-                    <td>{{ article.date }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+        <div id="results">
+            <v-container>
+                <v-row>
+                    <h4>Finsearch Results</h4>
+                </v-row>
+                <v-row align="center">
+                    <v-col cols="12" xl="9" lg="8" md="7" sm="0"></v-col>
+                    <v-col cols="12" xl="3" lg="4" md="5" sm="12">
+                        <v-select 
+                            v-model="relation_labels.selected"
+                            :items="relationFilterOptions()"
+                            filled chips label="Relations Filter" multiple>
+                            <template v-slot:selection="{ item, index }">
+                                <v-chip v-if="index < 2" color="primary">
+                                    <span>{{ item }}</span>
+                                </v-chip>
+                                <v-chip v-if="index === 2">
+                                    <span>+{{ relation_labels.selected.length - 2 }} Others</span>
+                                </v-chip>
+                            </template>
+                        </v-select>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-data-table 
+                        :headers="display.headers" 
+                        :items="relationFilter()" 
+                        :items-per-page="10" 
+                        class="elevation-1" 
+                        :loading="display.loading"
+                        loading-text="Retrieving results..."
+                        :sort-by.sync="display.sort_by"
+                        :sort-desc.sync="display.sort_desc"
+                    > 
+                        <template v-slot:item.closest_relation.e1="{ item }">
+                            <span class='entity entity1'>{{ item.closest_relation.e1 }}</span>
+                        </template>
+                        <template v-slot:item.closest_relation.e2="{ item }">
+                            <span class='entity entity2'>{{ item.closest_relation.e2 }}</span>
+                        </template>
+                        <template v-slot:item.relation_score="{ item }">
+                            {{ displayRelationScore(item.relation_score )}}
+                        </template>
+                        <template v-slot:item.sentences="{ item }">
+                            <div v-html="displayAbstract(item.sentences, item.closest_relation)"></div>
+                            
+                        </template>
+                        <template v-slot:item.title="{ item }">
+                            <a :href="'https://doi.org/' + item.doi">{{ item.title }}</a>
+                        </template>
+                        <!-- <template v-slot:item.authors="{ item }">
+                            <p class="author" v-for="(author, index) in item.authors" :key=index>
+                                {{ author }}
+                            </p>
+                        </template> -->
+                    </v-data-table>
+                </v-row>
+            </v-container>
+            
+        </div>
+    </v-app>
     </div>
 </template>
 
@@ -60,30 +149,160 @@ export default {
     data() {
         return {
             form: {
+                valid:false,
+                rules: {
+                    required: [value => !!value || "Required."]
+                },
                 entity1: '',
-                entity2: ''
+                entity2: '',
+                direction: true,
+                threshold: 0.5,
+                granular: true
             },
-            results: {},
+            results: {
+                granular: true, 
+                queries: {}
+            },
+            display: {
+                loading: false, 
+                headers: [
+                    { text: 'Entity 1', align: 'left', value: 'closest_relation.e1', width:'10%' },
+                    { text: 'Entity 2', value: 'closest_relation.e2', width:'10%' },
+                    { text: 'Relation', value: 'closest_relation.relation', align: 'center', width:'6%' },
+                    { text: 'Relation Score', value: 'relation_score', align: 'center', width:'6%' },
+                    { text: 'Abstract', value: 'sentences', width:'43%' },
+                    { text: 'Title', value: 'title', width: '15%' },
+                    { text: 'Date', value: 'date', width: '10%' },
+                ],
+                sort_by: 'relation_score',
+                sort_desc: true
+            },
+            relation_labels: {
+                all: {
+                    coarse: [ 'DIRECT', 'INDIRECT' ],
+                    granular: [  'ATTRIBUTE', 'FUNCTION', 'POSITIVE', 'NEGATIVE', 'NEUTRAL', 'NONE', 'CONDITION', 'COMPARISON', 'UNCERTAIN' ]
+                },
+                selected: []
+            }
         }
     },
     props: {
         msg: String
     },
     methods: {
+        // FORM
         submit(event) {
+            this.loading = true
             event.preventDefault();
             const path = 'http://127.0.0.1:5000/search';
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,
-            };
+                direction: this.form.direction,
+                threshold: this.form.threshold,
+                granular: this.form.granular
+            }
             axios.post(path, search_query).then(response => {
-                this.results = response.data.results
-                console.log(response + " got response")
+                this.results.queries = response.data.results
+                this.results.granular = response.data.granular
+                if (this.results.granular) {
+                    this.relation_labels.selected = this.relation_labels.all.granular
+                } else {
+                    this.relation_labels.selected = this.relation_labels.all.coarse
+                }
             }).catch((error) => {
-                console.error(error);
-            });
+                console.error(error)
+            })
+            this.loading = false
         },
+        directionToggle() {
+            if (this.form.direction) {
+                return "Ordered"
+            } else {
+                return "Interchangeable Order"
+            }
+        },
+        granularToggle() {
+            if (this.form.granular) {
+                return "Granular Relations"
+            } else {
+                return "Coarse Relations"
+            }
+        },
+        // DISPLAY TABLE
+        displayRelationScore(score) {
+            return (score * 100).toFixed(0)
+        },
+        displayAbstract(sentences, closest_relation) {
+            let e1_start = closest_relation.e1_start
+            let e1_end = closest_relation.e1_end
+            let e2_start = closest_relation.e2_start
+            let e2_end = closest_relation.e2_end
+            let entity1 = "<span class='entity entity1' style='border-radius:5px; padding:5px;'>" + closest_relation.e1 + "</span>"
+            let entity2 = "<span class='entity entity2' style='border-radius:5px; padding:5px;'>" + closest_relation.e2 + "</span>"
+
+            if (e1_start < e2_start) {
+                let before = sentences.slice(0, e1_start).join(" ")
+                let between = sentences.slice(e1_end+1, e2_start).join(" ")
+                let after = sentences.slice(e2_end+1).join(" ")
+                return "<p class='abstract'>" + [before, entity1, between, entity2, after].join(" ") + "</p>"
+            } else {
+                let before = sentences.slice(0, e2_start).join(" ")
+                let between = sentences.slice(e2_end+1, e1_start).join(" ")
+                let after = sentences.slice(e1_end+1).join(" ")
+                return "<p class='abstract'>" + [before, entity2, between, entity1, after].join(" ") + "</p>"
+            }
+            
+        },
+        // FILTERING
+        relationFilterOptions() {
+            if (this.results.granular) {
+                return this.relation_labels.all.granular
+            } else {
+                return this.relation_labels.all.coarse
+            }
+        },
+        relationFilter() {
+            return Object.values(this.results.queries).filter(row => {
+                return this.relation_labels.selected.includes(row.closest_relation.relation)
+            })
+        }
     },
 }
 </script>
+
+<style>
+.v-form {
+    white-space: nowrap;
+}
+
+td {
+  text-align: center !important;
+}
+
+.author {
+    line-height: 95%;
+    white-space: nowrap;
+}
+
+.entity {
+    border-radius: 5px;
+    padding: 4px;
+    line-height: 1.8;
+}
+
+.entity1 {
+    background-color:#E1EEDD;
+}
+
+.entity2 {
+    background-color:#FFE8D6;
+}
+
+.abstract {
+    padding-top: 7px;
+    margin-top: 0px; 
+    margin-bottom: 0px;
+    line-height: 1.8;
+}
+</style>
