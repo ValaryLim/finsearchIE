@@ -27,7 +27,7 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" md="12" lg="4">
                         <v-slider
                             v-model="form.threshold"
                             step="0.1"
@@ -46,8 +46,8 @@
                             </template>
                         </v-slider>
                     </v-col>
-                    <v-col cols="12" md="1"></v-col>
-                    <v-col cols="12" md="3">
+                    <v-col class="hidden-sm-and-down" cols="12" md="1"></v-col>
+                    <v-col cols="12" md="4" lg="3">
                         <v-switch 
                             inset color="primary" 
                             v-model="form.direction" 
