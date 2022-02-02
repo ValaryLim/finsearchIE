@@ -47,7 +47,7 @@
                         </v-slider>
                     </v-col>
                     <v-col cols="12" md="1"></v-col>
-                    <v-col cols="12" md="2">
+                    <v-col cols="12" md="3">
                         <v-switch 
                             inset color="primary" 
                             v-model="form.direction" 
@@ -78,7 +78,6 @@
         <br>
 
         <div id="results">
-            <!-- add date filtering, add relation score -->
             <v-container>
                 <v-row>
                     <h4>Finsearch Results</h4>
@@ -87,15 +86,15 @@
                     <v-col cols="12" xl="9" lg="8" md="7" sm="0"></v-col>
                     <v-col cols="12" xl="3" lg="4" md="5" sm="12">
                         <v-select 
-                            v-model="filtered_relations.granular"
-                            :items="relations.granular"
+                            v-model="relation_labels.selected"
+                            :items="relationFilterOptions()"
                             filled chips label="Relations Filter" multiple>
                             <template v-slot:selection="{ item, index }">
                                 <v-chip v-if="index < 2" color="primary">
                                     <span>{{ item }}</span>
                                 </v-chip>
                                 <v-chip v-if="index === 2">
-                                    <span>+{{ filtered_relations.granular.length - 2 }} Others</span>
+                                    <span>+{{ relation_labels.selected.length - 2 }} Others</span>
                                 </v-chip>
                             </template>
                         </v-select>
@@ -103,18 +102,27 @@
                 </v-row>
                 <v-row>
                     <v-data-table 
-                        :headers="headers" 
-                        :items="Object.values(results)" 
+                        :headers="display.headers" 
+                        :items="relationFilter()" 
                         :items-per-page="10" 
-                        class= "elevation-1" 
-                        :loading = "loading"
-                        loading-text = "Retrieving results..."
-                    >  
+                        class="elevation-1" 
+                        :loading="display.loading"
+                        loading-text="Retrieving results..."
+                        :sort-by.sync="display.sort_by"
+                        :sort-desc.sync="display.sort_desc"
+                    > 
+                        <template v-slot:item.closest_relation.e1="{ item }">
+                            <span class='entity entity1'>{{ item.closest_relation.e1 }}</span>
+                        </template>
+                        <template v-slot:item.closest_relation.e2="{ item }">
+                            <span class='entity entity2'>{{ item.closest_relation.e2 }}</span>
+                        </template>
                         <template v-slot:item.relation_score="{ item }">
                             {{ displayRelationScore(item.relation_score )}}
                         </template>
                         <template v-slot:item.sentences="{ item }">
-                            {{ processAbstract(item.sentences, item.relations) }}
+                            <div v-html="displayAbstract(item.sentences, item.closest_relation)"></div>
+                            
                         </template>
                         <template v-slot:item.title="{ item }">
                             <a :href="'https://doi.org/' + item.doi">{{ item.title }}</a>
@@ -128,7 +136,7 @@
                 </v-row>
             </v-container>
             
-                    </div>
+        </div>
     </v-app>
     </div>
 </template>
@@ -140,8 +148,6 @@ export default {
     name: 'Search',
     data() {
         return {
-            switch1: false,
-            loading : false,
             form: {
                 valid:false,
                 rules: {
@@ -153,32 +159,38 @@ export default {
                 threshold: 0.5,
                 granular: true
             },
-            results: {},
-            headers: [
-                { text: 'Entity 1', align: 'left', value: 'closest_relation.e1', width:'10%' },
-                { text: 'Entity 2', value: 'closest_relation.e2', width:'10%' },
-                { text: 'Relation', value: 'closest_relation.relation', align: 'center', width:'6%' },
-                { text: 'Relation Score', value: 'relation_score', align: 'center', width:'6%' },
-                { text: 'Abstract', value: 'sentences', width:'43%' },
-                { text: 'Title', value: 'title', width: '15%' },
-                { text: 'Date', value: 'date', width: '10%' },
-            ],
-            filtered_relations: {
-                granular: [  'ATTRIBUTE', 'FUNCTION', 'POSITIVE', 'NEGATIVE', 'NEUTRAL', 'NONE', 'CONDITION', 'COMPARISON', 'UNCERTAIN' ]
+            results: {
+                granular: true, 
+                queries: {}
             },
-            relations: {
-                coarse: [ 'DIRECT', 'INDIRECT' ],
-                granular: [  'ATTRIBUTE', 'FUNCTION', 'POSITIVE', 'NEGATIVE', 'NEUTRAL', 'NONE', 'CONDITION', 'COMPARISON', 'UNCERTAIN' ]
+            display: {
+                loading: false, 
+                headers: [
+                    { text: 'Entity 1', align: 'left', value: 'closest_relation.e1', width:'10%' },
+                    { text: 'Entity 2', value: 'closest_relation.e2', width:'10%' },
+                    { text: 'Relation', value: 'closest_relation.relation', align: 'center', width:'6%' },
+                    { text: 'Relation Score', value: 'relation_score', align: 'center', width:'6%' },
+                    { text: 'Abstract', value: 'sentences', width:'43%' },
+                    { text: 'Title', value: 'title', width: '15%' },
+                    { text: 'Date', value: 'date', width: '10%' },
+                ],
+                sort_by: 'relation_score',
+                sort_desc: true
             },
-            desserts: [
-                { title: ['test.', 'test'],  'date': 'dATE DATE' }
-            ]
+            relation_labels: {
+                all: {
+                    coarse: [ 'DIRECT', 'INDIRECT' ],
+                    granular: [  'ATTRIBUTE', 'FUNCTION', 'POSITIVE', 'NEGATIVE', 'NEUTRAL', 'NONE', 'CONDITION', 'COMPARISON', 'UNCERTAIN' ]
+                },
+                selected: []
+            }
         }
     },
     props: {
         msg: String
     },
     methods: {
+        // FORM
         submit(event) {
             this.loading = true
             event.preventDefault();
@@ -191,7 +203,13 @@ export default {
                 granular: this.form.granular
             }
             axios.post(path, search_query).then(response => {
-                this.results = response.data.results
+                this.results.queries = response.data.results
+                this.results.granular = response.data.granular
+                if (this.results.granular) {
+                    this.relation_labels.selected = this.relation_labels.all.granular
+                } else {
+                    this.relation_labels.selected = this.relation_labels.all.coarse
+                }
             }).catch((error) => {
                 console.error(error)
             })
@@ -211,20 +229,43 @@ export default {
                 return "Coarse Relations"
             }
         },
+        // DISPLAY TABLE
         displayRelationScore(score) {
             return (score * 100).toFixed(0)
         },
-        processAbstract(sentences, relations) {
-            console.log(sentences)
-            console.log(relations)
-            return sentences.join(' ')
-        },
-        relationFilterOptions() {
-            if (this.form.granular) {
-                return this.relations.granular
+        displayAbstract(sentences, closest_relation) {
+            let e1_start = closest_relation.e1_start
+            let e1_end = closest_relation.e1_end
+            let e2_start = closest_relation.e2_start
+            let e2_end = closest_relation.e2_end
+            let entity1 = "<span class='entity entity1' style='border-radius:5px; padding:5px;'>" + closest_relation.e1 + "</span>"
+            let entity2 = "<span class='entity entity2' style='border-radius:5px; padding:5px;'>" + closest_relation.e2 + "</span>"
+
+            if (e1_start < e2_start) {
+                let before = sentences.slice(0, e1_start).join(" ")
+                let between = sentences.slice(e1_end+1, e2_start).join(" ")
+                let after = sentences.slice(e2_end+1).join(" ")
+                return "<p class='abstract'>" + [before, entity1, between, entity2, after].join(" ") + "</p>"
             } else {
-                return this.relations.coarse
+                let before = sentences.slice(0, e2_start).join(" ")
+                let between = sentences.slice(e2_end+1, e1_start).join(" ")
+                let after = sentences.slice(e1_end+1).join(" ")
+                return "<p class='abstract'>" + [before, entity2, between, entity1, after].join(" ") + "</p>"
             }
+            
+        },
+        // FILTERING
+        relationFilterOptions() {
+            if (this.results.granular) {
+                return this.relation_labels.all.granular
+            } else {
+                return this.relation_labels.all.coarse
+            }
+        },
+        relationFilter() {
+            return Object.values(this.results.queries).filter(row => {
+                return this.relation_labels.selected.includes(row.closest_relation.relation)
+            })
         }
     },
 }
@@ -239,9 +280,29 @@ td {
   text-align: center !important;
 }
 
-
 .author {
     line-height: 95%;
     white-space: nowrap;
+}
+
+.entity {
+    border-radius: 5px;
+    padding: 4px;
+    line-height: 1.8;
+}
+
+.entity1 {
+    background-color:#E1EEDD;
+}
+
+.entity2 {
+    background-color:#FFE8D6;
+}
+
+.abstract {
+    padding-top: 7px;
+    margin-top: 0px; 
+    margin-bottom: 0px;
+    line-height: 1.8;
 }
 </style>

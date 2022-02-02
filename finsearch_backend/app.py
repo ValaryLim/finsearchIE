@@ -38,7 +38,6 @@ def search():
     response_object = { "status": "success" }
     # query
     post_data = request.get_json()
-    print(post_data)
     entity1 = post_data.get('entity1')
     entity2 = post_data.get('entity2')
     direction = post_data.get('direction')
@@ -47,6 +46,7 @@ def search():
     search_results = query.search_query(e1=entity1, e2=entity2, granular=True, dir=direction, threshold=threshold)
     # update response
     response_object['results'] = search_results
+    response_object['granular'] = True
     return response_object
 
 
