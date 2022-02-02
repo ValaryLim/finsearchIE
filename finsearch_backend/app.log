@@ -1,6 +1,6 @@
-2022-02-02 00:12:38,619 loading vocabulary file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model/vocab.txt
-2022-02-02 00:12:38,789 loading archive file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model from cache at /Users/valarylim/financeOpenIE/finsearch_backend/fin_model
-2022-02-02 00:12:38,790 Model config {
+2022-02-02 12:13:29,076 loading vocabulary file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model/vocab.txt
+2022-02-02 12:13:29,114 loading archive file /Users/valarylim/financeOpenIE/finsearch_backend/fin_model from cache at /Users/valarylim/financeOpenIE/finsearch_backend/fin_model
+2022-02-02 12:13:29,116 Model config {
   "attention_probs_dropout_prob": 0.1,
   "hidden_act": "gelu",
   "hidden_dropout_prob": 0.1,
@@ -14,30 +14,22 @@
   "vocab_size": 30522
 }
 
-2022-02-02 00:12:45,360 Initialization Done !!
-2022-02-02 00:12:45,853  * Debugger is active!
-2022-02-02 00:12:45,908  * Debugger PIN: 565-376-113
-2022-02-02 00:12:46,194 127.0.0.1 - - [02/Feb/2022 00:12:46] "OPTIONS /search HTTP/1.1" 200 -
-2022-02-02 00:12:46,197 127.0.0.1 - - [02/Feb/2022 00:12:46] "OPTIONS /search HTTP/1.1" 200 -
-2022-02-02 00:12:46,202 Taking last layer embedding of each word.
-2022-02-02 00:12:46,202 Mean of all words for sentence embedding.
-2022-02-02 00:12:46,215 Taking last layer embedding of each word.
-2022-02-02 00:12:46,215 Mean of all words for sentence embedding.
-2022-02-02 00:12:46,742 Shape of Sentence Embeddings = 768
-2022-02-02 00:12:46,743 Taking last layer embedding of each word.
-2022-02-02 00:12:46,743 Mean of all words for sentence embedding.
-2022-02-02 00:12:46,836 Shape of Sentence Embeddings = 768
-2022-02-02 00:12:46,836 Taking last layer embedding of each word.
-2022-02-02 00:12:46,836 Mean of all words for sentence embedding.
-2022-02-02 00:12:46,977 Shape of Sentence Embeddings = 768
-2022-02-02 00:12:47,481 127.0.0.1 - - [02/Feb/2022 00:12:47] "POST /search HTTP/1.1" 200 -
-2022-02-02 00:12:47,628 Shape of Sentence Embeddings = 768
-2022-02-02 00:12:48,345 127.0.0.1 - - [02/Feb/2022 00:12:48] "POST /search HTTP/1.1" 200 -
-2022-02-02 00:13:29,510 127.0.0.1 - - [02/Feb/2022 00:13:29] "OPTIONS /search HTTP/1.1" 200 -
-2022-02-02 00:13:29,514 Taking last layer embedding of each word.
-2022-02-02 00:13:29,514 Mean of all words for sentence embedding.
-2022-02-02 00:13:30,295 Shape of Sentence Embeddings = 768
-2022-02-02 00:13:30,296 Taking last layer embedding of each word.
-2022-02-02 00:13:30,300 Mean of all words for sentence embedding.
-2022-02-02 00:13:30,820 Shape of Sentence Embeddings = 768
-2022-02-02 00:13:31,203 127.0.0.1 - - [02/Feb/2022 00:13:31] "POST /search HTTP/1.1" 200 -
+2022-02-02 12:13:34,849 Initialization Done !!
+2022-02-02 12:13:35,104  * Debugger is active!
+2022-02-02 12:13:35,203  * Debugger PIN: 565-376-113
+2022-02-02 12:18:03,789 127.0.0.1 - - [02/Feb/2022 12:18:03] "OPTIONS /search HTTP/1.1" 200 -
+2022-02-02 12:18:03,806 Taking last layer embedding of each word.
+2022-02-02 12:18:03,808 Mean of all words for sentence embedding.
+2022-02-02 12:18:05,512 Shape of Sentence Embeddings = 768
+2022-02-02 12:18:05,512 Taking last layer embedding of each word.
+2022-02-02 12:18:05,513 Mean of all words for sentence embedding.
+2022-02-02 12:18:05,580 Shape of Sentence Embeddings = 768
+2022-02-02 12:18:05,819 127.0.0.1 - - [02/Feb/2022 12:18:05] "POST /search HTTP/1.1" 200 -
+2022-02-02 12:20:37,763 127.0.0.1 - - [02/Feb/2022 12:20:37] "OPTIONS /search HTTP/1.1" 200 -
+2022-02-02 12:20:37,769 Taking last layer embedding of each word.
+2022-02-02 12:20:37,769 Mean of all words for sentence embedding.
+2022-02-02 12:20:38,159 Shape of Sentence Embeddings = 768
+2022-02-02 12:20:38,159 Taking last layer embedding of each word.
+2022-02-02 12:20:38,159 Mean of all words for sentence embedding.
+2022-02-02 12:20:38,247 Shape of Sentence Embeddings = 768
+2022-02-02 12:20:38,349 127.0.0.1 - - [02/Feb/2022 12:20:38] "POST /search HTTP/1.1" 200 -
