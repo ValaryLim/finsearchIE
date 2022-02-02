@@ -83,8 +83,8 @@
                     <h4>Finsearch Results</h4>
                 </v-row>
                 <v-row align="center">
-                    <v-col cols="12" xl="9" lg="8" md="7" sm="0"></v-col>
-                    <v-col cols="12" xl="3" lg="4" md="5" sm="12">
+                    <v-col cols="12" xl="8" lg="7" md="5" sm="0"></v-col>
+                    <v-col cols="12" xl="4" lg="5" md="7" sm="12">
                         <v-select 
                             v-model="relation_labels.selected"
                             :items="relationFilterOptions()"
@@ -93,7 +93,7 @@
                                 <v-chip v-if="index < 2" color="primary">
                                     <span>{{ item }}</span>
                                 </v-chip>
-                                <v-chip v-if="index === 2">
+                                <v-chip v-if="index === 2" style="background-color:white;">
                                     <span>+{{ relation_labels.selected.length - 2 }} Others</span>
                                 </v-chip>
                             </template>
