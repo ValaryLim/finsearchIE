@@ -2,24 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 import query
 
-BOOKS = [
-    {
-        'title': 'On the Road',
-        'author': 'Jack Kerouac',
-        'read': True
-    },
-    {
-        'title': 'Harry Potter and the Philosopher\'s Stone',
-        'author': 'J. K. Rowling',
-        'read': False
-    },
-    {
-        'title': 'Green Eggs and Ham',
-        'author': 'Dr. Seuss',
-        'read': True
-    }
-]
-
+print("FINSEARCH BACKEND LOADED...")
 
 # instantiate the app
 app = Flask(__name__)
@@ -43,10 +26,13 @@ def search():
     direction = post_data.get('direction')
     threshold = post_data.get('threshold')
     granular = post_data.get('granular')
-    search_results = query.search_query(e1=entity1, e2=entity2, granular=True, dir=direction, threshold=threshold)
+    model = post_data.get('model')
+    search_results = query.search_query(
+        e1=entity1, e2=entity2, granular=granular, dir=direction, threshold=threshold, model=model
+    )
     # update response
     response_object['results'] = search_results
-    response_object['granular'] = True
+    response_object['granular'] = granular
     return response_object
 
 

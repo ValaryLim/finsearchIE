@@ -1,52 +1,51 @@
 import utils
+import encoder
 import abstract
-from finbert_embedding.embedding import FinbertEmbedding
-from scipy import spatial
 
 # Load finbert model
-finbert = FinbertEmbedding()
+models = {
+    'finbert': encoder.Encoder('ProsusAI/finbert'),
+    'multiqa': encoder.Encoder('multi-qa-MiniLM-L6-cos-v1'),
+    'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5'),
+    'roberta': encoder.Encoder('stsb-roberta-large')
+}
 
 # Load FinKB entities
-# FINKB_COARSE = utils.load_jsonl("data/finance_coarse_coref.jsonl")
-FINKB_GRANULAR = utils.load_jsonl("data/finance_granular_coref_sample.jsonl")
+finkbs = {
+    'finbert': {
+        'granular': utils.load_jsonl('data/finkb/finbert/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/finkb/finbert/coarse.jsonl')
+    },
+    'multiqa': {
+        'granular': utils.load_jsonl('data/finkb/multiqa/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/finkb/multiqa/coarse.jsonl')
+    },
+    'msmarco': {
+        'granular': utils.load_jsonl('data/finkb/msmarco/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/finkb/msmarco/coarse.jsonl')
+    },
+    'roberta': {
+        'granular': 'none',
+        'coarse': 'none'
+        # 'granular': utils.load_jsonl('data/finkb/roberta/finance_granular_coref_sample.jsonl'),
+        # 'coarse': utils.load_jsonl('data/finkb/roberta/finance_coarse_coref_sample.jsonl')
+    },
+}
 
-print("all loaded")
-
-def encode_entity(text):
-    return finbert.sentence_vector(text).tolist()
-
-def entity_similarity(embedding1, embedding2):
-    return (1 - spatial.distance.cosine(embedding1, embedding2))
-
-def query_similarity(query1, query2, gold1, gold2, dir = False):
-    sim11 = entity_similarity(query1, gold1)
-    sim12 = entity_similarity(query1, gold2)
-    sim21 = entity_similarity(query2, gold1)
-    sim22 = entity_similarity(query2, gold2)
-
-    if dir: # direction of entity matters
-        return max(sim11, sim22)
-    else: # ignore direction
-        return max(sim11, sim12, sim21, sim22) 
-
-def clean_entity(text):
-    return text.strip().lower()
-
-def search_query(e1, e2, granular=True, dir=False, threshold=0.5, top=100):
-    e1_embedding = encode_entity(clean_entity(e1))
-    e2_embedding = encode_entity(clean_entity(e2))
+def search_query(e1, e2, granular=True, dir=False, threshold=0.5, top=100, model="finbert"):
+    e1_embedding = models[model].encode_entity(e1.strip())
+    e2_embedding = models[model].encode_entity(e2.strip())
 
     # select finkb
-    if granular:
-        finkb_list = FINKB_GRANULAR
-    else:
-        finkb_list = FINKB_COARSE
+    granular_str = "granular" if granular else "coarse"
+    finkb_list = finkbs[model][granular_str]
     
     similar_abstracts_dict = { }
     # iterate thru all finkb entities
     for rel in finkb_list:
         # query similarity
-        rel_score = query_similarity(e1_embedding, e2_embedding, rel["E1_CODE"], rel["E2_CODE"], dir)
+        rel_score = models[model].query_similarity(e1_embedding, e2_embedding, rel["E1_CODE"], rel["E2_CODE"], dir)
+
         doc_key = rel["DOC_KEY"]
         # update similarity document
         if rel_score > threshold:

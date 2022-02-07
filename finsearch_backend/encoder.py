@@ -11,7 +11,8 @@ class Encoder:
     def entity_similarity(self, embedding1, embedding2):
         embedding1 = torch.Tensor(embedding1)
         embedding2 = torch.Tensor(embedding2)
-        return util.pytorch_cos_sim(embedding1, embedding2)
+        rel_score = util.pytorch_cos_sim(embedding1, embedding2)
+        return float(rel_score[0][0])
     
     def query_similarity(self, query1, query2, gold1, gold2, dir=False):
         sim11 = self.entity_similarity(query1, gold1)

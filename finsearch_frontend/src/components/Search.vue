@@ -66,6 +66,16 @@
                     <v-col cols="12" md="3"></v-col>
                 </v-row>
                 <v-row>
+                    <v-col cols="12" md="6" lg="4">
+                        <v-select
+                        :label="'Model'"
+                        :items="form.model_options"
+                        v-model="form.model"
+                        dense
+                        ></v-select>
+                    </v-col>
+                </v-row>
+                <v-row>
                     <v-btn id="submit" :disabled="!form.valid" type="submit" color="primary" elevation="2" large rounded>
                         Search
                     </v-btn>
@@ -157,7 +167,14 @@ export default {
                 entity2: '',
                 direction: true,
                 threshold: 0.5,
-                granular: true
+                granular: true,
+                model_options: [
+                    { text:'Finbert', value:'finbert' },
+                    { text:'Multi QA', value:'multiqa' },
+                    { text:'MS Marco', value:'msmarco' },
+                    { text:'Roberta', value:'roberta', disabled:true }
+                    ],
+                model: 'finbert'
             },
             results: {
                 granular: true, 
@@ -192,15 +209,16 @@ export default {
     methods: {
         // FORM
         submit(event) {
-            this.loading = true
-            event.preventDefault();
-            const path = 'http://127.0.0.1:5000/search';
+            this.display.loading = true
+            event.preventDefault()
+            const path = 'http://127.0.0.1:5000/search'
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,
                 direction: this.form.direction,
                 threshold: this.form.threshold,
-                granular: this.form.granular
+                granular: this.form.granular,
+                model: this.form.model
             }
             axios.post(path, search_query).then(response => {
                 this.results.queries = response.data.results
@@ -210,10 +228,10 @@ export default {
                 } else {
                     this.relation_labels.selected = this.relation_labels.all.coarse
                 }
+                this.display.loading = false 
             }).catch((error) => {
                 console.error(error)
             })
-            this.loading = false
         },
         directionToggle() {
             if (this.form.direction) {

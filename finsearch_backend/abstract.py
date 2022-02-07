@@ -6,8 +6,6 @@ import utils
 FINKB_SENTENCES = utils.load_json("data/abstract_sentences.json")
 FINKB_EXTRAINFO = utils.load_csv("data/abstract_extra_info.csv", list_cols = ['authors'])
 
-print("loaded")
-
 class Relation:
     def __init__(self, relation_dict, relation_score):
         self.e1_str = relation_dict["E1"]
@@ -94,4 +92,3 @@ class Abstract:
         }
         return abstract_dict
     
-
