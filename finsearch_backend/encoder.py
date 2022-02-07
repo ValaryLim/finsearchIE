@@ -21,6 +21,6 @@ class Encoder:
         sim22 = self.entity_similarity(query2, gold2)
 
         if dir: # direction of entity matters
-            return max(sim11, sim22)
+            return (sim11 + sim22)/2
         else:
-            return max(sim11, sim12, sim21, sim22)
+            return max((sim11 + sim22)/2, (sim12 + sim21)/2)
