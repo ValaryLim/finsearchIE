@@ -211,7 +211,7 @@ export default {
         submit(event) {
             this.display.loading = true
             event.preventDefault()
-            const path = 'http://127.0.0.1:5000/search'
+            const path = 'http://137.132.83.244/testFlask1/search'
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,
@@ -307,14 +307,17 @@ td {
     border-radius: 5px;
     padding: 4px;
     line-height: 1.8;
+    font-weight: bold;
 }
 
 .entity1 {
-    background-color:#E1EEDD;
+    background-color:#0331A1;
+    color: white;
 }
 
 .entity2 {
-    background-color:#FFE8D6;
+    background-color:#F88810;
+    color: white;
 }
 
 .abstract {
