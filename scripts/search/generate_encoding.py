@@ -24,7 +24,8 @@ MODELS = {
     # 'finkb': 'ProsusAI/finbert',
     # 'multiqakb': 'multi-qa-MiniLM-L6-cos-v1',
     # 'msmarcokb': 'msmarco-MiniLM-L6-cos-v5',
-    'stsbroberta': 'stsb-roberta-large'
+    # 'stsbroberta': 'stsb-roberta-large',
+    'finmultiqa': 'models/fin-multiqa'
 }
 
 class FinKBGenerator:

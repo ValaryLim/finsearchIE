@@ -1,12 +1,21 @@
 from sentence_transformers import SentenceTransformer, util
 import torch
+from finbert_embedding.embedding import FinbertEmbedding
 
 class Encoder: 
     def __init__(self, model_name):
-        self.model = SentenceTransformer(model_name)
+        self.model_name = model_name
+        if self.model_name == "finbert":
+            self.model = FinbertEmbedding()
+        else:
+            self.model = SentenceTransformer(self.model_name)
+        
     
     def encode_entity(self, text):
-        return self.model.encode(text, convert_to_tensor=True).tolist()
+        if self.model_name == "finbert":
+            return self.model.sentence_vector(text).tolist()
+        else:
+            return self.model.encode(text, convert_to_tensor=True).tolist()
     
     def entity_similarity(self, embedding1, embedding2):
         embedding1 = torch.Tensor(embedding1)
@@ -21,6 +30,6 @@ class Encoder:
         sim22 = self.entity_similarity(query2, gold2)
 
         if dir: # direction of entity matters
-            return max(sim11, sim22)
+            return (sim11 + sim22)/2
         else:
-            return max(sim11, sim12, sim21, sim22)
+            return max((sim11 + sim22)/2, (sim12 + sim21)/2)
