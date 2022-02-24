@@ -211,7 +211,7 @@ export default {
         submit(event) {
             this.display.loading = true
             event.preventDefault()
-            const path = 'http://137.132.83.244/testFlask1/search'
+            const path = 'http://137.132.83.244/finsearchBackend/query'
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,

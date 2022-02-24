@@ -16,13 +16,9 @@ models = {
     'fin_msmarco': encoder.Encoder('models/fin-msmarco')
 }
 # EVALUATION RESULTS:
-# {'stsb_multiqa': 0.44527515151537955, 'finbert': 0.13985654120643934, 'multiqa': 0.47037548606283963, 
-# 'msmarco': 0.43209875269172093, 'roberta': 0.3503788669841985}
-# {'stsb_multiqa': 0.44779870183517534, 'finbert': 0.16960061550140382, 'multiqa': 0.465436761106054, 
-# 'msmarco': 0.4332077649856607, 'roberta': 0.3410490820556879}
 # {'stsb_multiqa': 0.44779870183517534, 'finbert': 0.16960061550140382, 'multiqa': 0.465436761106054, 
 # 'msmarco': 0.4332077649856607, 'roberta': 0.3410490820556879, 'fin_multiqa': 0.48745486815770467, 
-# 'fin_msmarco': 0.44320187172542014}
+# 'fin_msmarco': 0.44320187172542014, 'fin_tapt':0.24985654120643934}
 
 def compute_similarity(e1, e2, model):
     e1_embedding = models[model].encode_entity(e1.strip())
