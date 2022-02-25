@@ -99,7 +99,7 @@
                             v-model="relation_labels.selected"
                             :items="relationFilterOptions()"
                             filled chips label="Relations Filter" multiple>
-                            <template v-slot:selection="{ item, index }">
+                            <template v-slot:[`selection`]="{ item, index }">
                                 <v-chip v-if="index < 2" color="primary">
                                     <span>{{ item }}</span>
                                 </v-chip>
@@ -121,20 +121,20 @@
                         :sort-by.sync="display.sort_by"
                         :sort-desc.sync="display.sort_desc"
                     > 
-                        <template v-slot:item.closest_relation.e1="{ item }">
+                        <template v-slot:[`item.closest_relation.e1`]="{ item }">
                             <span class='entity entity1'>{{ item.closest_relation.e1 }}</span>
                         </template>
-                        <template v-slot:item.closest_relation.e2="{ item }">
+                        <template v-slot:[`item.closest_relation.e2`]="{ item }">
                             <span class='entity entity2'>{{ item.closest_relation.e2 }}</span>
                         </template>
-                        <template v-slot:item.relation_score="{ item }">
+                        <template v-slot:[`item.relation_score`]="{ item }">
                             {{ displayRelationScore(item.relation_score )}}
                         </template>
-                        <template v-slot:item.sentences="{ item }">
+                        <template v-slot:[`item.sentences`]="{ item }">
                             <div v-html="displayAbstract(item.sentences, item.closest_relation)"></div>
                             
                         </template>
-                        <template v-slot:item.title="{ item }">
+                        <template v-slot:[`item.title`]="{ item }">
                             <a :href="'https://doi.org/' + item.doi">{{ item.title }}</a>
                         </template>
                         <!-- <template v-slot:item.authors="{ item }">
@@ -155,7 +155,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'Search',
+    name: 'SearchPage',
     data() {
         return {
             form: {
@@ -211,7 +211,7 @@ export default {
         submit(event) {
             this.display.loading = true
             event.preventDefault()
-            const path = 'http://137.132.83.244/finsearchBackend/query'
+            const path = 'https://137.132.83.244/finsearchBackend/query'
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,
