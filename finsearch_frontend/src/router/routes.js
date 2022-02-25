@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Search from '../components/Search.vue';
-import About from '../components/About.vue';
+import SearchPage from '../components/SearchPage.vue';
+import AboutPage from '../components/AboutPage.vue';
 
 Vue.use(Router)
 
@@ -12,12 +12,12 @@ export default new Router({
         {
             path: '/',
             name: 'About',
-            component: About
+            component: AboutPage
         },
         {
             path: '/search',
             name: 'Search',
-            component: Search,
+            component: SearchPage,
         },
     ]
 })
