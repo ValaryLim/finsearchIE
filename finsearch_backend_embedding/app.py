@@ -21,18 +21,17 @@ def search():
     threshold = float(request.args.get('threshold'))
     granular = bool(request.args.get('granular'))
     model = request.args.get('model')
-    print(entity1, entity2, direction, threshold, granular, model)
+    print("search query called", entity1, entity2, direction, threshold, granular, model)
 
-    print("search query called")
     search_results = query.search_query(
         e1=entity1, e2=entity2, granular=granular, dir=direction, threshold=threshold, model=model
     )
+
     print("search results returned")
-    print(search_results)
+
     return {
         0:search_results,
         }
 
-
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(port=5000)

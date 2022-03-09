@@ -22,10 +22,10 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
                     handlers=[LoggingHandler()])
 
 # Read the dataset
-model_name = 'msmarco-MiniLM-L6-cos-v5'
+model_name = 'multi-qa-MiniLM-L6-cos-v1'
 train_batch_size = 16
 num_epochs = 4
-model_save_path = 'models/fin-msmarco'
+model_save_path = 'models/fin-multiqa'
 
 # Load a pre-trained sentence transformer model
 model = SentenceTransformer(model_name)

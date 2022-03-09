@@ -5,31 +5,30 @@ import abstract
 # Load finbert model
 models = {
     'finbert': encoder.Encoder('ProsusAI/finbert'),
+    'finmultiqa': encoder.Encoder('models/finmultiqa'),
+    'finmsmarco': encoder.Encoder('models/finmsmarco'),
     'multiqa': encoder.Encoder('multi-qa-MiniLM-L6-cos-v1'),
-    'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5'),
-    'roberta': encoder.Encoder('stsb-roberta-large')
+    'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5')
 }
 
 # Load FinKB entities
 finkbs = {
     'finbert': {
-        'granular': utils.load_jsonl('data/finkb/finbert/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/finkb/finbert/coarse.jsonl')
+        'granular': utils.load_jsonl('data/finbert/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/finbert/coarse.jsonl')
     },
     'multiqa': {
-        'granular': utils.load_jsonl('data/finkb/multiqa/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/finkb/multiqa/coarse.jsonl')
+        'granular': utils.load_jsonl('data/multiqa/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/multiqa/coarse.jsonl')
     },
     'msmarco': {
-        'granular': utils.load_jsonl('data/finkb/msmarco/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/finkb/msmarco/coarse.jsonl')
+        'granular': utils.load_jsonl('data/msmarco/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/msmarco/coarse.jsonl')
     },
-    'roberta': {
-        'granular': 'none',
-        'coarse': 'none'
-        # 'granular': utils.load_jsonl('data/finkb/roberta/finance_granular_coref_sample.jsonl'),
-        # 'coarse': utils.load_jsonl('data/finkb/roberta/finance_coarse_coref_sample.jsonl')
-    },
+    'finmultiqa': {
+        'granular': utils.load_jsonl('data/finmultiqa/granular.jsonl'),
+        'coarse': utils.load_jsonl('data/finmultiqa/coarse.jsonl')
+    }
 }
 
 def search_query(e1, e2, granular=True, dir=False, threshold=0.5, top=100, model="finbert"):

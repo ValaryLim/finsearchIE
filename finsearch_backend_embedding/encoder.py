@@ -4,6 +4,7 @@ from finbert_embedding.embedding import FinbertEmbedding
 
 class Encoder: 
     def __init__(self, model_name):
+        print("Loading model...", model_name)
         self.model_name = model_name
         if "finbert" in self.model_name:
             self.model = FinbertEmbedding()
