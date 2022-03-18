@@ -1,10 +1,11 @@
 data/
+models/
 images/
 logs/
 fin_model/
-config.json
+utils/config.json
 *ipynb
 *__pycache__/
 *.ipynb_checkpoints
 *.log
-models/
+*.vscode/
