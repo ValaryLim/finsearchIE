@@ -4,6 +4,7 @@ from finbert_embedding.embedding import FinbertEmbedding
 
 class Encoder: 
     def __init__(self, model_name):
+        print("Loading model...", model_name)
         self.model_name = model_name
         if "finbert" in self.model_name:
             self.model = FinbertEmbedding()
@@ -21,8 +22,9 @@ class Encoder:
         embedding2 = torch.Tensor(embedding2)
         rel_score = util.pytorch_cos_sim(embedding1, embedding2)
         return float(rel_score[0][0])
-    
-    def query_similarity(self, query1, query2, gold1, gold2, dir=False):
+
+    def query_similarity(self, query1, query2, dir, gold):
+        gold1, gold2 = gold["E1_CODE"], gold["E2_CODE"]
         sim11 = self.entity_similarity(query1, gold1)
         sim12 = self.entity_similarity(query1, gold2)
         sim21 = self.entity_similarity(query2, gold1)

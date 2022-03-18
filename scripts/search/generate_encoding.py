@@ -22,10 +22,11 @@ SENT_PATHS = [
 ]
 MODELS = {
     # 'finkb': 'ProsusAI/finbert',
-    # 'multiqakb': 'multi-qa-MiniLM-L6-cos-v1',
-    # 'msmarcokb': 'msmarco-MiniLM-L6-cos-v5',
-    # 'stsbroberta': 'stsb-roberta-large',
-    'finmultiqa': 'models/fin-multiqa'
+    # 'multiqa': 'multi-qa-MiniLM-L6-cos-v1',
+    # 'msmarco': 'msmarco-MiniLM-L6-cos-v5',
+    'roberta': 'stsb-roberta-large',
+    'finmsmarco': 'models/fin-msmarco',
+    # 'finmultiqa': 'models/fin-multiqa'
 }
 
 class FinKBGenerator:

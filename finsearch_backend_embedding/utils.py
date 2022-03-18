@@ -8,6 +8,7 @@ def load_json(filename):
     return data
 
 def load_jsonl(filename):
+    print("Loading...", filename)
     with open(filename, 'r') as jsonl_file:
         data = list(jsonl_file)
         data = [json.loads(x) for x in data]
