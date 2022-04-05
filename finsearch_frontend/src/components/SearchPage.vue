@@ -1,96 +1,104 @@
 <template>
-  <div class="search">
+    <div class="search">
+        <v-container fluid>
+            <v-layout row wrap>
+            <v-flex xs12 class="text-xs-center" mt-5>
+                <h2>FinSearch</h2>
+                <p>
+                    Use the form below to retrieve a table of abstracts relevant to your two searched entities. 
+                    Refer to the User Guide for more information on the form options.
+                </p>
+            </v-flex>
+            </v-layout>
+        </v-container>
     <v-app id="search">
         <div id="form">
-        <v-form @submit="submit" v-model="form.valid">
-            <v-container>
-                <v-row>
-                    <v-col cols="12" md="6">
-                        <v-text-field
-                            v-model="form.entity1"
-                            :rules="form.rules.required"
-                            color="primary"
-                            label="Entity 1"
-                            placeholder="Economic growth"
-                            type="text"
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                        <v-text-field
-                            v-model="form.entity2"
-                            :rules="form.rules.required"
-                            color="primary"
-                            label="Entity 2"
-                            placeholder="Interest rates"
-                            type="text"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="12" md="12" lg="4">
-                        <v-slider
-                            v-model="form.threshold"
-                            step="0.1"
-                            ticks="always"
-                            tick-size="5" thumb-label
-                            min="0" max="1"
-                            :label="'Threshold'"
-                        >
-                            <template v-slot:append>
+            <v-form @submit="submit" v-model="form.valid">
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" md="6">
                             <v-text-field
-                                v-model="form.threshold"
-                                class="mt-0 mb-0 pt-0"
-                                type="number"
-                                style="width:50px"
+                                v-model="form.entity1"
+                                :rules="form.rules.required"
+                                color="primary"
+                                label="Entity 1"
+                                placeholder="Economic growth"
+                                type="text"
                             ></v-text-field>
-                            </template>
-                        </v-slider>
-                    </v-col>
-                    <v-col class="hidden-sm-and-down" cols="12" md="1"></v-col>
-                    <v-col cols="12" md="4" lg="3">
-                        <v-switch 
-                            inset color="primary" 
-                            v-model="form.direction" 
-                            :label="directionToggle()"
-                            class="mt-0 pt-0"
-                        ></v-switch>
-                    </v-col>
-                    <v-col cols="12" md="2">
-                        <v-switch 
-                            inset color="primary" 
-                            v-model="form.granular" 
-                            :label="granularToggle()"
-                            class="mt-0 pt-0"
-                        ></v-switch>
-                    </v-col>
-                    <v-col cols="12" md="3"></v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="12" md="6" lg="4">
-                        <v-select
-                        :label="'Model'"
-                        :items="form.model_options"
-                        v-model="form.model"
-                        dense
-                        ></v-select>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-btn id="submit" :disabled="!form.valid" type="submit" color="primary" elevation="2" large rounded>
-                        Search
-                    </v-btn>
-                </v-row>
-            </v-container>
-        </v-form>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field
+                                v-model="form.entity2"
+                                :rules="form.rules.required"
+                                color="primary"
+                                label="Entity 2"
+                                placeholder="Interest rates"
+                                type="text"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="12" lg="4">
+                            <v-slider
+                                v-model="form.threshold"
+                                step="10"
+                                ticks="always"
+                                tick-size="5" thumb-label
+                                min="0" max="100"
+                                :label="'Threshold'"
+                            >
+                                <template v-slot:append>
+                                <v-text-field
+                                    v-model="form.threshold"
+                                    class="mt-0 mb-0 pt-0"
+                                    type="number"
+                                    style="width:50px"
+                                ></v-text-field>
+                                </template>
+                            </v-slider>
+                        </v-col>
+                        <v-col class="hidden-sm-and-down" cols="12" md="1"></v-col>
+                        <v-col cols="12" md="4" lg="3">
+                            <v-switch 
+                                inset color="primary" 
+                                v-model="form.direction" 
+                                :label="directionToggle()"
+                                class="mt-0 pt-0"
+                            ></v-switch>
+                        </v-col>
+                        <v-col cols="12" md="2">
+                            <v-switch 
+                                inset color="primary" 
+                                v-model="form.granular" 
+                                :label="granularToggle()"
+                                class="mt-0 pt-0"
+                            ></v-switch>
+                        </v-col>
+                        <v-col cols="12" md="3"></v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="12" md="6" lg="4">
+                            <v-select
+                            :label="'Model'"
+                            :items="form.model_options"
+                            v-model="form.model"
+                            dense
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-btn id="submit" :disabled="!form.valid" type="submit" color="primary" elevation="2" large rounded>
+                            Search
+                        </v-btn>
+                    </v-row>
+                </v-container>
+            </v-form>
         </div>
-        <br>
-        <br>
-        <br>
-
+	<br>
         <div id="results">
             <v-container>
                 <v-row>
-                    <h4>Finsearch Results</h4>
+                    <h5>Search Results</h5>
                 </v-row>
                 <v-row align="center">
                     <v-col cols="12" xl="8" lg="7" md="5" sm="0"></v-col>
@@ -166,15 +174,15 @@ export default {
                 entity1: '',
                 entity2: '',
                 direction: true,
-                threshold: 0.5,
+                threshold: 50,
                 granular: true,
                 model_options: [
+                    { text:'FinMultiQA', value:'finmultiqa' },
                     { text:'Finbert', value:'finbert' },
-                    { text:'Multi QA', value:'multiqa' },
-                    { text:'MS Marco', value:'msmarco' },
-                    { text:'Roberta', value:'roberta', disabled:true }
+                    { text:'MultiQA', value:'multiqa' },
+                    { text:'MSMarco', value:'msmarco' },
                     ],
-                model: 'finbert'
+                model: 'finmultiqa'
             },
             results: {
                 granular: true, 
@@ -211,12 +219,13 @@ export default {
         submit(event) {
             this.display.loading = true
             event.preventDefault()
-            const path = 'https://137.132.83.244/finsearchBackend/query'
+            const path = 'http://137.132.83.244/finsearchBackend/query'
+            const query_threshold = this.form.threshold / 100;
             const search_query = {
                 entity1: this.form.entity1,
                 entity2: this.form.entity2,
                 direction: this.form.direction,
-                threshold: this.form.threshold,
+                threshold: query_threshold,
                 granular: this.form.granular,
                 model: this.form.model
             }
@@ -237,7 +246,7 @@ export default {
             if (this.form.direction) {
                 return "Ordered"
             } else {
-                return "Interchangeable Order"
+                return "Unordered"
             }
         },
         granularToggle() {

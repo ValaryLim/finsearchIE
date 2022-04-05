@@ -1,11 +1,21 @@
-from flask import Flask, request
-import multiprocessing
-import utils
-import encoder
-import abstract
-import functools
-import logging
+'''
+Finsearch Backend Embedding Main Application Start-Up Page
+'''
+print("Starting Up Finsearch Backend Embedder Microservice...")
 
+# INSTALLED PACKAGES
+from flask import Flask, request
+import numpy as np
+
+# FINSEARCH BACKEND EMBEDDER PACKAGES
+import utils
+import abstract
+import encoder
+import search_model
+
+print("Packages Loaded. Loading Models and Data...")
+
+# EMBEDDERS
 models = {
     'finmultiqa': encoder.Encoder('models/finmultiqa'),
     'finbert': encoder.Encoder('ProsusAI/finbert'),
@@ -13,36 +23,81 @@ models = {
     'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5')
 }
 
-finkbs = {
+# RELATIONAL TRIPLET DATA
+relation_info = {
     'finbert': {
-        'granular': utils.load_jsonl('data/finbert/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/finbert/coarse.jsonl')
+        'granular': utils.load_jsonl('data/finbert/granular_info.jsonl'),
+        'coarse': utils.load_jsonl('data/finbert/coarse_info.jsonl')
     },
     'multiqa': {
-        'granular': utils.load_jsonl('data/multiqa/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/multiqa/coarse.jsonl')
+        'granular': utils.load_jsonl('data/multiqa/granular_info.jsonl'),
+        'coarse': utils.load_jsonl('data/multiqa/coarse_info.jsonl')
     },
     'msmarco': {
-        'granular': utils.load_jsonl('data/msmarco/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/msmarco/coarse.jsonl')
+        'granular': utils.load_jsonl('data/msmarco/granular_info.jsonl'),
+        'coarse': utils.load_jsonl('data/msmarco/coarse_info.jsonl')
     },
     'finmultiqa': {
-        'granular': utils.load_jsonl('data/finmultiqa/granular.jsonl'),
-        'coarse': utils.load_jsonl('data/finmultiqa/coarse.jsonl')
+        'granular': utils.load_jsonl('data/finmultiqa/granular_info.jsonl'),
+        'coarse': utils.load_jsonl('data/finmultiqa/coarse_info.jsonl')
     }
 }
 
-logging.info("FINSEARCH BACKEND LOADED...")
+# NNDESCENT GRAPHS
+relation_train = {
+    'finbert': {
+        'granular': {
+            True: search_model.generate_index('data/finbert/granular_train.npy', True),
+            False: search_model.generate_index('data/finbert/granular_train.npy', False),
+        }, 
+        'coarse': {
+            True: search_model.generate_index('data/finbert/coarse_train.npy', True),
+            False: search_model.generate_index('data/finbert/coarse_train.npy', False),
+        }
+    },
+    'multiqa': {
+        'granular': {
+            True: search_model.generate_index('data/multiqa/granular_train.npy', True),
+            False: search_model.generate_index('data/multiqa/granular_train.npy', False),
+        }, 
+        'coarse': {
+            True: search_model.generate_index('data/multiqa/coarse_train.npy', True),
+            False: search_model.generate_index('data/multiqa/coarse_train.npy', False),
+        }
+    },
+    'msmarco': {
+        'granular': {
+            True: search_model.generate_index('data/msmarco/granular_train.npy', True),
+            False: search_model.generate_index('data/msmarco/granular_train.npy', False),
+        }, 
+        'coarse': {
+            True: search_model.generate_index('data/msmarco/coarse_train.npy', True),
+            False: search_model.generate_index('data/msmarco/coarse_train.npy', False),
+        }
+    },
+    'finmultiqa': {
+        'granular': {
+            True: search_model.generate_index('data/finmultiqa/granular_train.npy', True),
+            False: search_model.generate_index('data/finmultiqa/granular_train.npy', False),
+        }, 
+        'coarse': {
+            True: search_model.generate_index('data/finmultiqa/coarse_train.npy', True),
+            False: search_model.generate_index('data/finmultiqa/coarse_train.npy', False),
+        }
+    }
+}
+
 print("FINSEARCH BACKEND LOADED...")
 
-# instantiate the app
+# Instantiate the Application
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-# enable CORS
-
 @app.route("/")
 def main():
+    '''
+    Route to check if Microservice is alive.
+    '''
     return "<h1>Finsearch Backend Embedder Microservice</h1>"
 
 def search_query(
@@ -71,31 +126,35 @@ def search_query(
     selected = models[model]
     e1_embedding = selected.encode_entity(e1.strip())
     e2_embedding = selected.encode_entity(e2.strip())
+    embedding = np.array(list(e1_embedding) + list(e2_embedding))
 
-    # select finkb
+    # select data
     granular_str = "granular" if granular else "coarse"
-    finkb_list = finkbs[model][granular_str]
+    relevant_relation_info = relation_info[model][granular_str]
+    relevant_search_index = relation_train[model][granular_str][direction]
 
-    # compute relation scores
-    global relation_scores
-    with multiprocessing.Pool(processes=20) as pool:
-        func = functools.partial(
-            selected.query_similarity, e1_embedding, e2_embedding, dir)
-        relation_scores = pool.map(func, finkb_list)
+    # retrieve top relations
+    neighbours = relevant_search_index.query(
+        np.array([embedding,]), top * 10
+    )
+    relation_index, relation_score = neighbours[0][0], neighbours[1][0]
 
     # extract relevant abstracts
     similar_abstracts_dict = {}
-    for ind in range(len(finkb_list)):
-        rel, rel_score = finkb_list[ind], relation_scores[ind]
-        doc_key = rel["DOC_KEY"]
+    for ind in range(len(relation_score)):
+        rel_ind = relation_index[ind]
+        rel_score = relation_score[ind]
+        rel_score = 1-np.exp2(rel_score)
+        rel_info = relevant_relation_info[rel_ind]
+        doc_key = rel_info["DOC_KEY"]
 
         # update similarity document
         if rel_score > threshold:
             if doc_key in similar_abstracts_dict:
-                similar_abstracts_dict[doc_key].add_relation(rel, rel_score)
+                similar_abstracts_dict[doc_key].add_relation(rel_info, rel_score)
             else:
                 new_abstract = abstract.Abstract(doc_key)
-                new_abstract.add_relation(rel, rel_score)
+                new_abstract.add_relation(rel_info, rel_score)
                 similar_abstracts_dict[doc_key] = new_abstract
 
     # select top abstracts
@@ -110,6 +169,12 @@ def search_query(
 
 @app.route("/search")
 def search():
+    '''
+    This route:
+    1. Retrieves requested arguments
+    2. Runs search query
+    3. Returns query results as json
+    '''
     # retrieve request arguments
     entity1 = request.args.get('entity1')
     entity2 = request.args.get('entity2')
@@ -118,7 +183,7 @@ def search():
     granular = bool(request.args.get('granular'))
     model = request.args.get('model')
 
-    logging.info(f"Search Query Called: \
+    print(f"Search Query Called: \
         {entity1} {entity2} {threshold} {direction} {granular} {model}")
     
     # retrieve search query results
@@ -127,9 +192,9 @@ def search():
         granular=granular, direction=direction, threshold=threshold, 
         model=model
     )
+    print("Search Results Returned.")
 
-    logging.info("Search Results Returned.")
-
+    # return results
     return {
         0: results
         }

@@ -7,9 +7,11 @@
             scroll-target="#scrolling-techniques-3"
         >
         <v-app-bar-title class="text-no-wrap">
+            <h4>
             <router-link to="/" tag="span" style="cursor: pointer">
                 {{ title }}
             </router-link>
+            </h4>
         </v-app-bar-title>
         <template v-slot:extension>
             <v-tabs align-with-title>
@@ -40,8 +42,9 @@ export default {
             title: 'FinSearch', 
             sidebar: false,
             menu_items: [
-                { title: 'About', path:'/' },
-                { title: 'Search', path:'/search' },
+                { title: 'Search', path:'/' },
+                { title: 'User Guide', path:'/userguide' },
+                { title: 'About', path:'/about' },
             ]
         }
     }
