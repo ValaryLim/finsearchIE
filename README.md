@@ -7,7 +7,7 @@ This repository contains code and instructions for the following processes:
 5. FinSearch service (FinSearch Frontend, Finsearch Backend Querier, FinSearch Backend Embedder)
 6. Training and evaluating of FinMultiQA and FinMsMarco
 
-Please refer to [Constructing a Searchable Knowledge Base from Financial Text using Information Extraction](https://github.com/ValaryLim/financeOpenIE/blob/main/report.pdf) for more details.
+Please refer to [Constructing a Searchable Knowledge Base from Financial Text using Information Extraction](https://github.com/ValaryLim/finsearchIE/blob/main/report.pdf) for more details.
 
 FinSearch is hosted on [http://finsearch.surge.sh](http://finsearch.surge.sh).
 

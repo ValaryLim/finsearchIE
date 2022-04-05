@@ -14,8 +14,8 @@
         <p class="text-left">
             For more information on the development of <span class="name">FinKB</span> and 
             <span class="name">FinSearch</span>, please refer to our 
-            <a href="https://github.com/ValaryLim/financeOpenIE">Paper</a> and 
-            <a href="https://github.com/ValaryLim/financeOpenIE">Github Repository</a>.
+            <a href="https://github.com/ValaryLim/finsearchIE/blob/main/report.pdf">Paper</a> and 
+            <a href="https://github.com/ValaryLim/finsearchIE">Github Repository</a>.
         </p>
       </v-flex>
     </v-layout>

@@ -4,14 +4,14 @@ sys.path.append(os.getcwd())
 import utils
 
 data_list = [
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/finbert/coarse.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/finbert/granular.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/finmultiqa/coarse.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/finmultiqa/granular.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/msmarco/coarse.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/msmarco/granular.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/multiqa/coarse.jsonl',
-    '/Users/valarylim/financeOpenIE/finsearch_backend_embedding/data/multiqa/granular.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/finbert/coarse.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/finbert/granular.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/finmultiqa/coarse.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/finmultiqa/granular.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/msmarco/coarse.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/msmarco/granular.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/multiqa/coarse.jsonl',
+    '/Users/valarylim/finsearchIE/finsearch_backend_embedding/data/multiqa/granular.jsonl',
 ]
 
 if __name__ == "__main__":

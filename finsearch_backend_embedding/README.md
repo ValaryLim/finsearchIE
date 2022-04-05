@@ -12,11 +12,11 @@ On receiving a query, the Embedder Microservice:
 ## Data Preparation
 The Embedder Microservice requries a data preparation step to generate the k-nearest neighbours graph required for Approximate Nearest Neighbour Descent. Run the following steps to preprocess the graph:
 1. Transfer .jsonl files containing embedded relational triplet predictions into finsearch_backend_embedding/data/(model_name)/ directory
-2. Call [preprocessing.py script](https://github.com/ValaryLim/financeOpenIE/tree/main/finsearch_backend_embedding/preprocessing.py)
+2. Call [preprocessing.py script](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_embedding/preprocessing.py)
 ```bash
 python preprocessing.py (model_name)
 ```
-3. Modify paths for `models`, `relation_info`, `relation_train` in [app.py](https://github.com/ValaryLim/financeOpenIE/tree/main/finsearch_backend_embedding/app.py)
+3. Modify paths for `models`, `relation_info`, `relation_train` in [app.py](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_embedding/app.py)
 
 ## Getting Started
 This project should be run on Python 3.7. A conda environment can be created using the following:
@@ -24,7 +24,7 @@ This project should be run on Python 3.7. A conda environment can be created usi
 conda create -n finsearch_backend_embedder python=3.7
 ```
 
-A [requirements.txt](https://github.com/ValaryLim/financeOpenIE/tree/main/finsearch_backend_embedding/requirements.txt) file is provided that contains the specifications of the packages used in the project. Run the following command to install the required packages.
+A [requirements.txt](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_embedding/requirements.txt) file is provided that contains the specifications of the packages used in the project. Run the following command to install the required packages.
 ```bash
 pip install -r requirements.txt
 ```
