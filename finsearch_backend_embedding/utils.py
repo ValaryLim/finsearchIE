@@ -1,10 +1,12 @@
-import json
+'''
+Utilities Package
+Loads and Saves Data and Models
+'''
 import ast
-import pandas as pd
-import numpy as np
-import pynndescent
+import json
 import joblib
-import distance_metrics
+import numpy as np
+import pandas as pd
 
 def load_json(filename):
     with open(filename, 'r') as json_file:

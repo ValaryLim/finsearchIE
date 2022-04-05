@@ -1,24 +1,46 @@
 '''
-Splits .jsonl relation files into index data and other data
+Preprocessing Step to Generate k-Nearest Neighbours Graph
+
+Reads coarse.jsonl and granular.jsonl relation files
+Splits files into graph data and miscellaneous (author, date, etc) data
+Saves data into same file directory
+
+To run this file, call:
+python preprocessing.py (model_name)
 '''
+import sys
 import utils
 import numpy as np
 
-data_list = [
-    'data/finbert/coarse.jsonl',
-    'data/finbert/granular.jsonl',
-    'data/finmultiqa/coarse.jsonl',
-    'data/finmultiqa/granular.jsonl',
-    'data/msmarco/coarse.jsonl',
-    'data/msmarco/granular.jsonl',
-    'data/multiqa/coarse.jsonl',
-    'data/multiqa/granular.jsonl',
-]
+# EXAMPLE DATA PATHS
+# data_list = [
+#     'data/finbert/coarse.jsonl',
+#     'data/finbert/granular.jsonl',
+#     'data/finmultiqa/coarse.jsonl',
+#     'data/finmultiqa/granular.jsonl',
+#     'data/msmarco/coarse.jsonl',
+#     'data/msmarco/granular.jsonl',
+#     'data/multiqa/coarse.jsonl',
+#     'data/multiqa/granular.jsonl',
+# ]
 
 if __name__ == "__main__":
-    for dataname in data_list:
+    # retrieve input embedder name
+    embedder_name = sys.argv[1]
+    
+    # generate paths
+    data_names = [f"data/{embedder_name}/coarse.jsonl", f"data/{embedder_name}/granular.jsonl"]
+    info_names = [f"data/{embedder_name}/coarse_info.jsonl", f"data/{embedder_name}/granular_info.jsonl"]
+    embd_names = [f"data/{embedder_name}/coarse_train.npy", f"data/{embedder_name}/granular_train.npy"]
+    
+    for i in range(len(data_names)):
+        # extract info
+        dataname, infoname, embdname = data_names[i], info_names[i], embd_names[i]
+
+        # retrieve data
         data = utils.load_jsonl(dataname)
-        dataname_value = dataname.split('.')[0]
+
+        # convert to array
         data_train = np.array([np.array(x['E1_CODE'] + x['E2_CODE']) for x in data])
         data_info = [{
             'E1': x['E1'], 
@@ -30,6 +52,7 @@ if __name__ == "__main__":
             'REL': x['REL'], 
             'DOC_KEY': x['DOC_KEY']
         } for x in data]
+
         # save split data
-        utils.save_numpy(f"{dataname_value}_train.npy", data_train)
-        utils.save_jsonl(f"{dataname_value}_info.jsonl", data_info)
+        utils.save_numpy(embdname, data_train)
+        utils.save_jsonl(infoname, data_info)
