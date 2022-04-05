@@ -178,9 +178,10 @@ def search():
     # retrieve request arguments
     entity1 = request.args.get('entity1')
     entity2 = request.args.get('entity2')
-    direction = bool(request.args.get('direction'))
+    print(request.args.get('granular'), request.args.get('direction'))
+    direction = eval(request.args.get('direction').capitalize())
     threshold = float(request.args.get('threshold'))
-    granular = bool(request.args.get('granular'))
+    granular = eval(request.args.get('granular').capitalize())
     model = request.args.get('model')
 
     print(f"Search Query Called: \

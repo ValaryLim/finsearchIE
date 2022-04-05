@@ -43,6 +43,7 @@ def query():
         f'granular={granular}',
         f'model={model}',
     ])
+
     r = requests.get(query_str)
     response_object['results'] = r.json()["0"]
     response_object['granular'] = granular
