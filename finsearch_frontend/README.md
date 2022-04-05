@@ -6,23 +6,19 @@ Run the following command to install the required packages.
 ```
 npm install
 ```
-
 ### Compiles and Hot-Reloads for Development
 ```
 npm run serve
 ```
-
 ### Compiles and Minifies for Production
 ```
 npm run build
 ```
-
 ### Lints and Fixes Files
 ```
 npm run lint
 ```
-
-### Customize configuration
+### Customize Configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Hosting on Surge
@@ -30,7 +26,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```
 npm install --global surge
 ```
-
 ### Host Site
 1. Move into this project directory
 2. Run `npm run build` to compile and minify the application for production
