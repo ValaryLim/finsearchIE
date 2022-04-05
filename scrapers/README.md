@@ -1,4 +1,6 @@
 # Financial Abstract Scrapers
+This directory contains information on setting up and running the scrapers used to generate finacial abstracts in our database. 
+
 ## Getting Started
 This project should be run on Python 3.7. A conda environment can be created using the following:
 ```bash
