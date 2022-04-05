@@ -21,12 +21,11 @@ SENT_PATHS = [
     "data/finkb/finance_granular_sents.json"
 ]
 MODELS = {
-    # 'finkb': 'ProsusAI/finbert',
-    # 'multiqa': 'multi-qa-MiniLM-L6-cos-v1',
-    # 'msmarco': 'msmarco-MiniLM-L6-cos-v5',
-    'roberta': 'stsb-roberta-large',
+    'finbert': 'ProsusAI/finbert',
+    'multiqa': 'multi-qa-MiniLM-L6-cos-v1',
+    'msmarco': 'msmarco-MiniLM-L6-cos-v5',
     'finmsmarco': 'models/fin-msmarco',
-    # 'finmultiqa': 'models/fin-multiqa'
+    'finmultiqa': 'models/fin-multiqa'
 }
 
 class FinKBGenerator:

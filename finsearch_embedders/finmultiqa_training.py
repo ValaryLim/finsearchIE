@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(message)s',
 model_name = 'multi-qa-MiniLM-L6-cos-v1'
 train_batch_size = 16
 num_epochs = 4
-model_save_path = 'models/fin-multiqa'
+model_save_path = 'models/finmultiqa'
 
 # Load a pre-trained sentence transformer model
 model = SentenceTransformer(model_name)
