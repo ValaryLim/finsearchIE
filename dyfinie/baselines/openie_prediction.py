@@ -1,16 +1,17 @@
+'''
+OpenIE (Baseline) Prediction Pipeline
+'''
 import os
-import sys
 import tqdm
 import json
 import itertools
-from pathlib import Path
 import numpy as np
+from pathlib import Path
 from allennlp.predictors.predictor import Predictor
-import allennlp_models.tagging
 
-# set current working directory
-sys.path.append(os.getcwd())
-import utils
+def make_dir(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 def extract_ner_relations(cleaned_relations, shift = 0):
     relations_set = set()
@@ -160,9 +161,9 @@ def generate_predictions(model_name, predictor):
             }
             preds.append(row_pred)
         
-        utils.make_dir(f"data/predictions/{model_name}/{dname}/")
+        make_dir(f"data/predictions/{model_name}/{dname}/")
         save_json(pred_path, preds)
 
 if __name__ == "__main__":
-    predictor = Predictor.from_path("https://storage.googleapis.com/allennlp-public-models/structured-prediction-srl-bert.2020.12.15.tar.gz")
-    generate_predictions(model_name="srl", predictor=predictor)
+    predictor = Predictor.from_path("https://storage.googleapis.com/allennlp-public-models/openie-model.2020.03.26.tar.gz")
+    generate_predictions(model_name="openie", predictor=predictor)
