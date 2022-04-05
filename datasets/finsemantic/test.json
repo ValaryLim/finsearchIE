@@ -1,0 +1,527 @@
+[
+    {
+        "sent_a": "customer-supplier relationship",
+        "sent_b": "customer relationship management (CRM)",
+        "sent_c": "interest rates",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "financing",
+        "sent_b": "borrowing",
+        "sent_c": "compensation schemes",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "Spending response",
+        "sent_b": "Consumer Spending",
+        "sent_c": "determinants of retirement behavior",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "shareholder interests",
+        "sent_b": "interest of all shareholders in a firm",
+        "sent_c": "value maximisation",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "greenhouse gas emissions",
+        "sent_b": "emission of toxic chemicals",
+        "sent_c": "top management team composition",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "market incumbency",
+        "sent_b": "presence in a market prior to a discontinuity",
+        "sent_c": "organizational prehistory",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "arbitrage pricing theory (APT)",
+        "sent_b": "asset prices in an APT or multifactor model",
+        "sent_c": "iterated nonlinear weighted least squares",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "financially distressed companies in Japan",
+        "sent_b": "distressed firms",
+        "sent_c": "asset growth",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "capital income subsidies",
+        "sent_b": "tax treatment of capital income",
+        "sent_c": "post-announcement share-price drifts",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": " early exercise premium",
+        "sent_b": "early exercise privilege",
+        "sent_c": "Simulation exercises",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "corporate entrepreneurship",
+        "sent_b": "entrepreneurial organizations",
+        "sent_c": "International Monetary Fund",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "behavioural bias",
+        "sent_b": "behavioural finance",
+        "sent_c": "operating strategy",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "forecasting in economics and finance",
+        "sent_b": "economic forecasts",
+        "sent_c": "hybrid BPN models",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "expected government support",
+        "sent_b": "political connections and government support",
+        "sent_c": "corporate tax policy",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "linear autoregressive and random walk models",
+        "sent_b": "time series regression models",
+        "sent_c": "tax decrease",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "financial misstatement risk",
+        "sent_b": "detected misstatements (earnings restatements)",
+        "sent_c": "equity choice",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "MNC marketing channel structures and processes",
+        "sent_b": "MNC channel management",
+        "sent_c": "heterogeneity in discounting and consumption risk",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "firm capital allocation",
+        "sent_b": "efficient allocation of capital",
+        "sent_c": "marginal return from public investment",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "firm capital allocation",
+        "sent_b": "dispersion in the return to capital across firms",
+        "sent_c": "workforce composition",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "wage dispersion",
+        "sent_b": "wage inequality",
+        "sent_c": "third-order moment-matching tree with truncation",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "individual product-market export venture",
+        "sent_b": "intensity of competition in firms' product markets",
+        "sent_c": "inventory control model",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "CAPM risk-adjusted returns",
+        "sent_b": "higher risk-adjusted returns",
+        "sent_c": "joint value creation",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "licensing of certified public accountants (CPAs)",
+        "sent_b": "American Institute of Certified Public Accountants",
+        "sent_c": "P/E ratio",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "fundamental theorem of asset pricing",
+        "sent_b": "international capital asset pricing model",
+        "sent_c": "between-country heterogeneity",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "R&D efforts",
+        "sent_b": "research and development",
+        "sent_c": "cost of misaligned governance",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "domestic cryptocurrency market",
+        "sent_b": "restrictions on trading of cryptocurrencies",
+        "sent_c": "political economy perspective",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "nondiscretionary accrual estimate",
+        "sent_b": "predicting accruals",
+        "sent_c": "risk-coping strategies for the rural poor",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "arbitrage between the bond and ETF markets",
+        "sent_b": "ETF arbitrage",
+        "sent_c": "response instability on survey policy items",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "portfolio weights",
+        "sent_b": "portfolio allocation",
+        "sent_c": "life insurance benefits",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "effects of information exchange",
+        "sent_b": "exchange information",
+        "sent_c": "foreign exchange after 1930",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "Markov chain",
+        "sent_b": "continuous-time Markov model",
+        "sent_c": "productive small-business sector",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "slow credit growth",
+        "sent_b": "credit crunches",
+        "sent_c": "expected cost",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "bid-ask spread",
+        "sent_b": "bid-ask spreads in the foreign exchange futures market",
+        "sent_c": "transaction costs",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "innovative revenue-sharing arrangements",
+        "sent_b": "revenue-sharing",
+        "sent_c": "empirical research",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "money managers who compete for fund flows",
+        "sent_b": "fund manager",
+        "sent_c": "major national announcement of budget cuts",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "firms' heterogeneous exposure to economic policy uncertainty (EPU exposure)",
+        "sent_b": "EPU exposure",
+        "sent_c": "net working capital",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "job satisfaction",
+        "sent_b": "employee satisfaction",
+        "sent_c": "communicate value to customers to drive their satisfaction",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "intraday price ranges of 25 German equities",
+        "sent_b": "short stocks with high intraday volatility",
+        "sent_c": "city office-level client importance fee-based measures",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": " key supply chain management objectives",
+        "sent_b": "firm's objective",
+        "sent_c": "general equilibrium growth model",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "preliminary model of public-private partnerships",
+        "sent_b": "business partnership",
+        "sent_c": "contingent capital",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "the Sharpe-Lintner asset pricing model",
+        "sent_b": "asset-price behaviour",
+        "sent_c": "uncovered interest parity (UIP)",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "2008 global financial crisis",
+        "sent_b": "sub-prime crisis",
+        "sent_c": "GDP growth",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "real activities manipulation",
+        "sent_b": "stock market manipulation",
+        "sent_c": "entrepreneurial initiative",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "financial statements",
+        "sent_b": "balance sheet composition",
+        "sent_c": "leading theories on organizations",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "audit expectation-performance gap",
+        "sent_b": "gap between society's expectations of auditors and auditors perceived performance",
+        "sent_c": "option value for national environments",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "primary financing theory",
+        "sent_b": "corporate financing",
+        "sent_c": "systematic measurement errors in patent citations",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "time the introductions of new products",
+        "sent_b": "new product introductions",
+        "sent_c": "organizational controls",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "board of directors",
+        "sent_b": "self-interested Board of Directors (BOD)",
+        "sent_c": "equity-based compensation",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "trading volume",
+        "sent_b": "volume of asset trading",
+        "sent_c": "trading cost",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "post-announcement share-price drifts",
+        "sent_b": "effect of analyst news on price",
+        "sent_c": "market microstructure",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "capital flows",
+        "sent_b": "mutual fund flows",
+        "sent_c": "vulnerable countrie",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "green supply chain management",
+        "sent_b": "supply chain environmental management",
+        "sent_c": "questionaire-based survey",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "high cost of health care in the United States",
+        "sent_b": "healthcare spending",
+        "sent_c": "healthy US banks",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "central counterparty (CCP) risk management",
+        "sent_b": "unifying CCP risk measurement framework",
+        "sent_c": "renegotiation",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "non-venture-backed initial public offerings (IPOs)",
+        "sent_b": "American IPOs",
+        "sent_c": "procedural justice",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "interest rate volatility",
+        "sent_b": "volatility of sovereign interest rate spreads",
+        "sent_c": "secondary aftermarket prices",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "consumer segments",
+        "sent_b": "selecting target customer segments",
+        "sent_c": "potential injurers",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "perverse risk-bearing incentives",
+        "sent_b": "existing system of deposit insurance subsidizes risk-taking",
+        "sent_c": "role of mathematics in economic theory",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "Dividend and earnings announcements and stock splits",
+        "sent_b": "earnings after stock splits",
+        "sent_c": "merger-specific",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "recent flexibile-exchange rate policies",
+        "sent_b": "exchange rage regimes",
+        "sent_c": "insurance and reinsurance industries",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "earnings press release",
+        "sent_b": "earnings information in their press releases",
+        "sent_c": "option pricing arguments",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "non-audit fees ratio",
+        "sent_b": "on-audit service provision",
+        "sent_c": "company size",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "underprice entrants",
+        "sent_b": "deliberate underpricing",
+        "sent_c": "job satisfaction",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "firm performance",
+        "sent_b": "objective company performance",
+        "sent_c": "Poisson-based models",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "mandatory disclosure of brokerage firms commission income",
+        "sent_b": "mutual fund brokerage commissions",
+        "sent_c": "financial sustainability of public schemes",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "layoff costs",
+        "sent_b": "paying large executive cash bonuses amid layoffs",
+        "sent_c": "private information flow in the market",
+        "rel_ab": "0.75",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "resource allocation rules",
+        "sent_b": "framework to allocate marketing resources",
+        "sent_c": "audit effort",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "participation of independent directors on corporate boards",
+        "sent_b": "role of independent directors",
+        "sent_c": "importance of the monopoly aspects of culture",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "nonco-operative equilibrium in an oligopoly",
+        "sent_b": "non-cooperative scheme",
+        "sent_c": "net cost of attending private and public colleges",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "New York stock Exchange listed securities",
+        "sent_b": "New York stock exchanges",
+        "sent_c": "quasi-mandatory retirement savings schemes",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "firm's dividend policies",
+        "sent_b": "dividend policy at Chinese firms",
+        "sent_c": "first-price sealed bid auctions",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "investors' certainty in the continuity of the banking relationship",
+        "sent_b": "banking relationship",
+        "sent_c": "liability regime",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "Hedge Fund replication products",
+        "sent_b": "security-based replication",
+        "sent_c": "risk-free rate",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "trade dynamics",
+        "sent_b": "trade relationships",
+        "sent_c": "socialistic income sharing",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    },
+    {
+        "sent_a": "shareholder rights issues",
+        "sent_b": "shareholder rights' policy ",
+        "sent_c": "alternative lines of investment",
+        "rel_ab": "1",
+        "rel_ac": "0"
+    }
+]
