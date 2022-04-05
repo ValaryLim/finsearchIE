@@ -1,11 +1,11 @@
 # DyFinIE
 ## DyFinIE Training (Dygiepp)
-We provide scripts and configurations to train DyFinIE in [financeOpenIE/dyfinie/dygiepp/](https://github.com/ValaryLim/financeOpenIE/tree/main/dyfinie/dygiepp/).
+We provide scripts and configurations to train DyFinIE in [finsearchIE/dyfinie/dygiepp/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/dygiepp/).
 
 ### Getting Started
 1. Clone the [Dygiepp repository](https://github.com/dwadden/dygiepp)
 2. Follow the instructions in [Dygiepp](https://github.com/dwadden/dygiepp) to install required dependencies
-3. Copy files in the [financeOpenIE/dyfinie/dygiepp/](https://github.com/ValaryLim/financeOpenIE/tree/main/dyfinie/dygiepp/) directory into Dygiepp
+3. Copy files in the [finsearchIE/dyfinie/dygiepp/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/dygiepp/) directory into Dygiepp
 
 ### Model Training
 Navigate to your local Dygiepp root repository.
@@ -41,10 +41,10 @@ allennlp predict \
 ```
 
 ## Baselines
-We provide scripts to generate predictions for baseline models OpenIE, SRL, and ReLogic (Deprecated) in [financeOpenIE/dyfinie/baselines/](https://github.com/ValaryLim/financeOpenIE/tree/main/dyfinie/baselines/). 
+We provide scripts to generate predictions for baseline models OpenIE, SRL, and ReLogic (Deprecated) in [finsearchIE/dyfinie/baselines/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/baselines/). 
 
 To run the baseline models:
-1. Move into [financeOpenIE/dyfinie/baselines/](https://github.com/ValaryLim/financeOpenIE/tree/main/dyfinie/baselines/) directory
+1. Move into [finsearchIE/dyfinie/baselines/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/baselines/) directory
 2. `pip install -r (model)_requirements.txt`
 3. `python (model)_prediction.py`
 
