@@ -16,6 +16,30 @@ A [requirements.txt](https://github.com/ValaryLim/financeOpenIE/tree/main/dyfini
 ```bash
 pip install -r requirements.txt
 ```
-
 ## Running Python Scripts
 To run the scrapers, call `python (filename)`.
+
+## Prodigy Annotation
+### Start Labelling Session
+To start labelling session, we run:
+```
+prodigy rel.manual (db_name) en_core_web_sm (filename) --label ATTRIBUTE,FUNCTION,POS,NEG,NEU,NONE,UNCERTAIN,CONDITION,BETTER,COREF --span-label ENTITY --add-ents --wrap 
+```
+
+### Reload Dataset
+From Prodigy Database:
+```
+prodigy rel.manual (db_name) en_core_web_sm dataset:(db_name) --label ATTRIBUTE,FUNCTION,POS,NEG,NEU,NONE,UNCERTAIN,CONDITION,BETTER,COREF --span-label ENTITY --add-ents --wrap 
+```
+
+From Json File:
+```
+cat (path/to/input) | prodigy rel.manual (db_name) en_core_web_sm - --loader jsonl --label ATTRIBUTE,FUNCTION,POSITIVE,NEGATIVE,NEUTRAL,NONE,UNCERTAIN,CONDITION,COMPARISON,COREFERENCE,DIRECT,INDIRECT --span-label ENTITY --add-ents --wrap 
+```
+
+
+### Export Prodigy Datasets
+After data annotation, we run the following line to export the dataset from Prodigy's database to a .jsonl file.
+```
+prodigy db-out (db_name) > (path/to/output.jsonl)
+```
