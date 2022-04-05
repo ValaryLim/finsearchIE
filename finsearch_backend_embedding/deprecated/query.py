@@ -1,12 +1,19 @@
 '''
-LEGACY CODE. NO LONGER BEING USED.
+DEPRECATED QUERY PACKAGE
+
+This Python file contains the deprecated code that runs queries for related
+abstracts using the Naive Search Algorithm with Parallel Processing and Numba
+compilation. 
+
+The package is no longer being used, and its functionalities have been moved 
+into app.py.
 '''
 import utils
 import encoder
 import abstract
 import multiprocessing
 
-# Load finbert model
+# EMBEDDERS
 models = {
     'finbert': encoder.Encoder('ProsusAI/finbert'),
     'finmultiqa': encoder.Encoder('models/finmultiqa'),
@@ -14,8 +21,7 @@ models = {
     'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5')
 }
 
-
-# Load FinKB entities
+# FINKB
 finkbs = {
     'finbert': {
         'granular': utils.load_jsonl('data/finbert/granular.jsonl'),
@@ -34,7 +40,6 @@ finkbs = {
         'coarse': utils.load_jsonl('data/finmultiqa/coarse.jsonl')
     }
 }
-
 
 def search_query(
     e1, e2, granular=True, direction=False, threshold=0.5, 
