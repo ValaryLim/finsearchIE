@@ -95,7 +95,7 @@ if __name__ == "__main__":
     article_filtered_dirs = [f'{cwd}/data/articles_filtered/75_finance/']
 
     # combine same publisher journals into one .csv
-    # combine_publisher(article_dir, publisher_sites)
+    combine_publisher(article_dir, publisher_sites)
     
     # combine all articles into one .csv
     for filtered_dir in article_filtered_dirs:
@@ -111,36 +111,35 @@ if __name__ == "__main__":
         abstracts_df = clean_field(abstracts_df, field='abstract') # clean
         abstracts_df = abstracts_df.drop_duplicates(subset=['doi']) # drop duplicates
         abstracts_df = label_id(abstracts_df) # label abstracts
-        print(abstracts_df['source'].value_counts())
-        # abstracts_df.to_csv(f'{abstracts_dir}abstracts_processed.csv', index=False) # save processed abstracts
+        abstracts_df.to_csv(f'{abstracts_dir}abstracts_processed.csv', index=False) # save processed abstracts
 
-        # # extract sentences
-        # sentences_df = split_paragraph(abstracts_df)[["id", "sentence"]]
-        # sentences_df_1000 = sentences_df.sample(n=1000, random_state=4101)
-        # sentences_df.to_csv(f'{abstracts_dir}sentences_1000.csv', index=False)
-        # sentences_df.to_csv(f'{abstracts_dir}sentences.csv', index=False)
+        # extract sentences
+        sentences_df = split_paragraph(abstracts_df)[["id", "sentence"]]
+        sentences_df_1000 = sentences_df.sample(n=1000, random_state=4101)
+        sentences_df.to_csv(f'{abstracts_dir}sentences_1000.csv', index=False)
+        sentences_df.to_csv(f'{abstracts_dir}sentences.csv', index=False)
 
-        # # randomly sample abstracts 
-        # abstracts_2500 = abstracts_df.sample(n=2500, random_state=4101)
+        # randomly sample abstracts 
+        abstracts_2500 = abstracts_df.sample(n=2500, random_state=4101)
 
-        # # for each abstract
-        # for row_ind, row in abstracts_2500.iterrows():
-        #     id = row['id']
-        #     abstract = row['abstract']
-        #     encoded_abstract = abstract.encode("utf8")
-        #     with open(f'{sample_abstracts_dir}{id}.txt', 'wb') as f:
-        #         f.write(encoded_abstract)
+        # for each abstract
+        for row_ind, row in abstracts_2500.iterrows():
+            id = row['id']
+            abstract = row['abstract']
+            encoded_abstract = abstract.encode("utf8")
+            with open(f'{sample_abstracts_dir}{id}.txt', 'wb') as f:
+                f.write(encoded_abstract)
 
-        # # combine sampled abstracts into same json file
-        # samples = []
-        # for path in glob.glob(f'{sample_abstracts_dir}*.txt'):
-        #     with open(path, "r") as f:
-        #         txt = f.read()
-        #         doc_id = path.split('/')[-1].split('.txt')[0]
-        #         samples.append({'text': txt, 'meta': {'id': doc_id}})
-        # with open(f'{filtered_dir}sample.json', 'w') as jsonfile:
-        #     json.dump(samples, jsonfile)
+        # combine sampled abstracts into same json file
+        samples = []
+        for path in glob.glob(f'{sample_abstracts_dir}*.txt'):
+            with open(path, "r") as f:
+                txt = f.read()
+                doc_id = path.split('/')[-1].split('.txt')[0]
+                samples.append({'text': txt, 'meta': {'id': doc_id}})
+        with open(f'{filtered_dir}sample.json', 'w') as jsonfile:
+            json.dump(samples, jsonfile)
 
-        # print(filtered_dir)
-        # print('num abstracts:', len(abstracts_df))
-        # print('num sentences:', len(sentences_df))
+        print(filtered_dir)
+        print('num abstracts:', len(abstracts_df))
+        print('num sentences:', len(sentences_df))

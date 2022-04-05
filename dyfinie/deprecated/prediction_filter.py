@@ -1,3 +1,7 @@
+'''
+DEPRECATED CODE
+Pipeline to filter for higher quality relations.
+'''
 import os
 import sys
 import spacy
