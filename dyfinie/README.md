@@ -49,3 +49,6 @@ To run the baseline models:
 3. `python (model)_prediction.py`
 
 ## Evaluation
+- `ie_evaluation.py`: Evaluates performance of information extraction models
+- `ner_model_performance.py`: Code to compare DyFinIE with off-the-shelf NER models
+- `validation_curve_plots.py`: Code to plot validation curves of DyFinIE tuning 
