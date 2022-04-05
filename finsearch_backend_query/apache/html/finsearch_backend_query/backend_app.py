@@ -1,30 +1,20 @@
-'''
-Finsearch Backend Querier Main Application Start-Up Page
-'''
 from flask import Flask, request
 from flask_cors import CORS
 import requests
 
-# Instantiate the Application
+# instantiate the app
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-# Enable CORS
+# enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route("/")
 def main():
-    '''
-    Route to check if Microservice is alive.
-    '''
     return "<h1>Finsearch Backend Query</h1>"
 
 @app.route("/query", methods=["GET", "POST"])
 def query():
-    '''
-    Query Rest API that unpacks inputs from Finsearch Frontend and processes
-    them to be fed into Finsearch Backend Embedder
-    '''
     response_object = { "status": "success" }
     # query
     post_data = request.get_json()
