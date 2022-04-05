@@ -19,18 +19,18 @@ def load_jsonl(path):
 
 if __name__ == "__main__":
     pred_directories = [
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/external_zhiren/coarse/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/external_zhiren/granular/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/external_zhiren/coarse/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/external_zhiren/granular/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/finance/coarse_coref/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/finance/granular_coref/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/finance/coarse_coref/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/finance/granular_coref/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_comb/external_zhiren/coarse/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_comb/external_zhiren/granular/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_perm/external_zhiren/coarse/",
-        # "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_perm/external_zhiren/granular/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/external_zhiren/coarse/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/external_zhiren/granular/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/external_zhiren/coarse/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/external_zhiren/granular/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/finance/coarse_coref/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_comb/finance/granular_coref/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/finance/coarse_coref/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-large/rel_perm/finance/granular_coref/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_comb/external_zhiren/coarse/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_comb/external_zhiren/granular/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_perm/external_zhiren/coarse/",
+        "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_perm/external_zhiren/granular/",
         "data/predictions/macaw_processed/macaw_dyfinie/macaw-11b/rel_comb/finance/coarse_coref/"
     ]
     dataset_types = ["train", "dev", "test"]
