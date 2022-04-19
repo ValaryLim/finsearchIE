@@ -36,4 +36,4 @@ As our embedding models and data are memory-intensive, the Embedder takes a sign
     │   ├── querier
     |   ├── embedder
     │   └── embedding models
-    └── .
+    └── media

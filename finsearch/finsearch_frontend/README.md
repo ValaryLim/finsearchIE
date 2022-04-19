@@ -31,7 +31,7 @@ FinSearch Frontend is written in Javascript using the Vue.js framework. The appl
     ```
 
 ## Local Development
-To start your project locally, run:
+To start the project locally, run:
 ```
 npm run serve
 ```
