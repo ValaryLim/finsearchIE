@@ -29,24 +29,11 @@ The [Embedder microservice](finsearch_backend/embedder/) can only be queried via
 As our embedding models and data are memory-intensive, the Embedder takes a significant time to cold start. We have separated the Querier and Embedder microservice to allow for the creation of a custom Python environment (required for some embedding models), and to reduce the need to reload our embedding models and data to keep our service highly performant.
 
 ## Directory Structure
-This directory is split into 3 components
+
     .
-    ├── ...
-    ├── data_processing                 # Scripts to process data           
-    ├── datasets                        # FinMechanic and FinSemantic Data    
-    │   ├── finmechanic                     # Raw dataset for DyFinIE model training
-    │   └── finsemantic                     # Raw dataset for FinMultiQA model training
-    ├── dyfinie                         # DyFinIE model implementation
-    │   ├── baselines                       # Baseline model prediction pipelines
-    │   ├── dygiepp                         # Files to Run DyFinIE Tuning and Prediction
-    |   └── evaluation                      # Evaluation scripts for DyFinIE
-    ├── finkb                           # FinKB generation
-    |   └── evaluation                      # Evaluation scripts for FinKB
-    ├── finsearch_frontend              # FinSearch Frontend Application
-    ├── finsearch_backend_query         # FinSearch Backend Querier Microservice Application
-    │   └── apache                          # Instructions to run Querier on Apache
-    ├── finsearch_backend_embedder      # FinSearch Backend Embedder Microservice Application
-    ├── finsearch_embedders             # Scripts to train financial multiqa and msmarco models
-    ├── scrapers                        # Financial abstract scrapers
-    ├── utils                           # Utilities folder for scripts
-    └── ...
+    ├── finsearch_frontend    
+    ├── finsearch_backend
+    │   ├── querier
+    |   ├── embedder
+    │   └── embedding models
+    └── .
