@@ -1,4 +1,4 @@
-# FinSearch Backend Embedder Microservice
+# FinSearch Backend: Embedder Microservice
 The Embedder microservice is responsible for pre-loading the embedding models and data into the system memory, receiving the formulated queries from the Querier service, and trawling through the database to return the most applicable abstracts in a JSON format. It should be kept perpetually running on the machine, and is only access by the Querier microservice.
 
 ## How the Embedder Works
