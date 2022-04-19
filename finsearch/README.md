@@ -2,7 +2,7 @@
 ## Description 
 FinSearch is a service that allows users to query for relevant abstracts from our financial knowledge base, FinKB. Users enter 2 keywords or phrases, and the service trawls through its corpus of almost 1,000,000 relational triplets and aggregates them to return the most relevant results. The service has a separate frontend and backend system, with the backend consisting of two separate microservices, a Querier, and an Embedder.
 
-### [FinSearch Frontend](finsearch_frontend/)
+## [FinSearch Frontend](finsearch_frontend/)
 
 
 ## Table of Contents
