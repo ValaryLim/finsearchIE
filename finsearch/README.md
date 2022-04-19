@@ -1,6 +1,9 @@
 # FinSearch
 ## Description 
-FinSearch is a service that allows users to query for relevant abstracts from our financial knowledge base, FinKB. Users enter 2 keywords or phrases, and the service trawls through its corpus of almost 1,000,000 relational triplets and aggregates them to return the most relevant results.
+FinSearch is a service that allows users to query for relevant abstracts from our financial knowledge base, FinKB. Users enter 2 keywords or phrases, and the service trawls through its corpus of almost 1,000,000 relational triplets and aggregates them to return the most relevant results. The service has a separate frontend and backend system, with the backend consisting of two separate microservices, a Querier, and an Embedder.
+
+### [FinSearch Frontend](finsearch_frontend/)
+
 
 ## Table of Contents
 - [Folder Structure](#folder-structure)
@@ -10,6 +13,27 @@ FinSearch is a service that allows users to query for relevant abstracts from ou
 - [License](#license)
 
 ## Folder Structure
+This directory is split into 3 components
+    .
+    ├── ...
+    ├── data_processing                 # Scripts to process data           
+    ├── datasets                        # FinMechanic and FinSemantic Data    
+    │   ├── finmechanic                     # Raw dataset for DyFinIE model training
+    │   └── finsemantic                     # Raw dataset for FinMultiQA model training
+    ├── dyfinie                         # DyFinIE model implementation
+    │   ├── baselines                       # Baseline model prediction pipelines
+    │   ├── dygiepp                         # Files to Run DyFinIE Tuning and Prediction
+    |   └── evaluation                      # Evaluation scripts for DyFinIE
+    ├── finkb                           # FinKB generation
+    |   └── evaluation                      # Evaluation scripts for FinKB
+    ├── finsearch_frontend              # FinSearch Frontend Application
+    ├── finsearch_backend_query         # FinSearch Backend Querier Microservice Application
+    │   └── apache                          # Instructions to run Querier on Apache
+    ├── finsearch_backend_embedder      # FinSearch Backend Embedder Microservice Application
+    ├── finsearch_embedders             # Scripts to train financial multiqa and msmarco models
+    ├── scrapers                        # Financial abstract scrapers
+    ├── utils                           # Utilities folder for scripts
+    └── ...
 
 ## Installation and Usage
 
@@ -18,9 +42,9 @@ FinSearch is a service that allows users to query for relevant abstracts from ou
 ## Guides and Resources
 
 ## License
-MIT License
+**MIT License**
 
-Copyright (c) [2022] [Valary Lim Wan Qian]
+Copyright (c) 2021-2022 Valary Lim Wan Qian
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
