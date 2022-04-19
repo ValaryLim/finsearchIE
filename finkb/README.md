@@ -1,28 +1,62 @@
-# FinKB Generation and Evaluation
+# FinKB
+FinKB (Financial Knowledge Base) is a Financial Mechanism Knowledge Base that consists of 646,977 coarse relational triplets and 391,843 granular relational triplets, extracted by our custom information extraction model, DyFinIE.
+
+## Relation Schema
+### Coarse Relation Schema
+| Relation Label | Description |
+| --- | --- |
+| DIRECT | E1 is an ATTRIBUTE/SUBSET/FUNCTION/MODEL of E2 |
+| INDIRECT | E1 INFLUENCES/CORRELATES with E2 |
+
+### Granular Relation Schema
+| Relation Label | Description |
+| --- | --- |
+| ATTRIBUTE | E1 is an ATTRIBUTE/SUBSET of E2 |
+| FUNCTION | E1 is a FUNCTION/MODEL of E2 |
+| POSITIVE | E1 POSITIVELY correlates with/causes E2 |
+| NEGATIVE | E1 NEGATIVELY correlates with/causes E2 |
+| NEUTRAL | E1 correlates with/causes E2 (no direction indicated) |
+| NONE | E1 does not correlate with/cause E2 |
+| CONDITION | E1 is a CONDITION of E2 |
+| COMPARISON | E1 is DIFFERENT/BETTER than E2 |
+| UNCERTAIN | E1 and E2 have UNCERTAIN relationship |
+
 ## Getting Started
-This project should be run on Python 3.7. A conda environment can be created using the following:
+### Prerequisites
+This project was built to run on Python 3.9. Refer to the [Python Installation Guide](https://www.python.org/downloads/) for more instructions. Alternatively, if Anaconda is installed, a separate conda environment can be created using the following:
 ```bash
-conda create -n finsearch_backend_querier python=3.7
+conda create -n finkb python=3.9
 ```
 
-A [requirements.txt](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_query/requirements.txt) file is provided that contains the specifications of the packages used in the project. Run the following command to install the required packages.
-```bash
-pip install -r requirements.txt
-```
+### Installation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/ValaryLim/finsearchIE.git
+   ```
+2. Move into the FinKB directory
+    ```sh
+    cd finsearchIE/finkb/
+    ```
+3. Install Python packages
+    ```sh
+    pip install -r requirements.txt
+    ```
 
 ## Generate FinKB
 This step calls the prediction model on the full financial corpus to generate FinKB.
 ```
 python generate_finkb.py
 ```
+1. Move into the FinKB directory
+    ```sh
+    cd finsearchIE/finkb/
+    ```
+2. Run FINKB generation script
+    ```sh
+    python finkb_generation.py
+    ```
 
-## Generate Encoded FinKB
-This step calls the specified encoder models on all relational triplets in FinKB and saves it into a file for use in FinSearch.
-```
-python generate_encoded_finkb.py
-```
-
-## Run Evaluation 
+## Evaluate FinKB
 Evaluation function to compare performance of different embedding models.
 ```
 python evaluate_encoder.py

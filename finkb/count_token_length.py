@@ -1,6 +1,4 @@
 import json
-import pandas as pd
-import numpy as np
 
 datasets = [
     "data/prodigy_processed/external_zhiren/coarse/test.json", \
