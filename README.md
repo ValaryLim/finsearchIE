@@ -40,4 +40,12 @@ FinSearch is hosted on [http://finsearch.surge.sh](http://finsearch.surge.sh).
 - Vue.js
 
 ## Authors
-Valary Lim Wan Qian - [Github](https://github.com/ValaryLim)
+Valary Lim Wan Qian - [Github](https://github.com/ValaryLim) | [Email](mailto:valarylim@outlook.com?subject=[FinSearchIE: Enquiry]%20Source%20Han%20Sans)
+
+
+## License
+Distributed under the MIT License. See [LICENSE.txt](LICENSE.txt) for more information.
+
+## Contact
+Valary Lim Wan Qian - valarylim@outlook.com
+Project Link: [https://github.com/ValaryLim/finsearchIE](https://github.com/ValaryLim/finsearchIE)
