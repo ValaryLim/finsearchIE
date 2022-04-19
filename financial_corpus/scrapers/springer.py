@@ -1,15 +1,15 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 import tqdm
-import utils
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
 }
 
-def retrieve_journals(path):
+def retrieve_journals():
     journals = []
     for i in range(1, 11):
         # economics search
@@ -28,7 +28,7 @@ def retrieve_journals(path):
         query_journals = [f"https://link.springer.com{x.a['href']}/volumes-and-issues" for x in query_journals]
         journals.extend(query_journals)
     
-    utils.convert_list_to_txt(journals, f'{path}/springer_journals.txt')
+    return journals
 
 def scrape_springer_journal(journal, path):
     journal_page = requests.get(journal, headers=headers)
@@ -65,4 +65,18 @@ def scrape_springer_journal(journal, path):
                 continue
         
     filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-    df.to_csv(f'{path}/springer/{filename}', index=False)
+    df.to_csv(f'{path}/{filename}', index=False)
+
+if __name__ == "__main__":
+    springer_dir = "data/springer"
+
+    # create directory if does not exist
+    if not os.path.exists(sagepub_dir):
+        os.makedirs(sagepub_dir)
+
+    # retrieve journals
+    springer_journals = retrieve_journals()
+
+    # retrieve abstracts
+    for journal in springer_journals:
+        scrape_springer_journal(journal, springer_dir)
