@@ -37,6 +37,8 @@ Different scraping methods were used to retrieve relevant abstracts from differe
 | Pubmed (decommissioned) | `pubmed.py` | Financial terms in [`keywords.txt`](scrapers/keywords.txt) were queried and all abstracts from search containing root word 'finance' (e.g. finance, financing, financial) were retrieved. |
 | Sagepub (decommissioned) | `sagepub.py` | All abstracts from journals tagged with 'Economic' or 'Management' were retrieved. |
 
+Note that we have decommissioned the Pubmed and Sagepub scrapers as a significant percentage of abstracts retrieved from these sources were not financial-related. 
+
 ### Usage
 To run each scraper:
 ```sh
