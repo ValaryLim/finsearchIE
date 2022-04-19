@@ -1,4 +1,5 @@
 # Searchable Financial Knowledge Base
+
 This repository contains code and instructions for the following processes:
 1. Scraping financial abstracts
 2. Data annotation using Prodigy 
@@ -40,4 +41,11 @@ FinSearch is hosted on [http://finsearch.surge.sh](http://finsearch.surge.sh).
 - Vue.js
 
 ## Authors
-Valary Lim Wan Qian - [Github](https://github.com/ValaryLim)
+Valary Lim Wan Qian - [Github](https://github.com/ValaryLim) | [Email](mailto:valarylim@outlook.com) | [LinkedIn](https://www.linkedin.com/in/valarylim/)
+
+
+## License
+Distributed under the MIT License. See [LICENSE.txt](LICENSE.txt) for more information.
+
+## Contact
+For questions or problems with the code, create a GitHub issue (preferred) or email [valarylim@outlook.com](mailto:valarylim@outlook.com).
