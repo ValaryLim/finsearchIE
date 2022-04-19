@@ -3,7 +3,7 @@ The Querier microservice exposes REST API endpoints for the Frontend service to 
 
 ## Getting Started
 ### Prerequisites
-This project was built to run on Python 3.9. Refer to the !(Python installation guide)[https://www.python.org/downloads/] for more instructions. Alternatively, if Anaconda is installed, a separate conda environment can be created using the following:
+This project was built to run on Python 3.9. Refer to the [Python Installation Guide](https://www.python.org/downloads/) for more instructions. Alternatively, if Anaconda is installed, a separate conda environment can be created using the following:
 ```bash
 conda create -n finsearch_backend_querier python=3.9
 ```
