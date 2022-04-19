@@ -47,5 +47,4 @@ Valary Lim Wan Qian - [Github](https://github.com/ValaryLim) | [Email](mailto:va
 Distributed under the MIT License. See [LICENSE.txt](LICENSE.txt) for more information.
 
 ## Contact
-Valary Lim Wan Qian - valarylim@outlook.com
-Project Link: [https://github.com/ValaryLim/finsearchIE](https://github.com/ValaryLim/finsearchIE)
+For questions or problems with the code, create a GitHub issue (preferred) or email [valarylim@outlook.com](mailto:valarylim@outlook.com).
