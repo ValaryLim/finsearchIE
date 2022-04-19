@@ -3,7 +3,7 @@ The Querier microservice exposes REST API endpoints for the Frontend service to 
 
 ## Getting Started
 ### Prerequisites
-This project was built to run on Python 3.9. Refer to the (Python installation page)[https://www.python.org/downloads/] for more instructions. Alternatively, if Anaconda is installed, a separate conda environment can be created using the following:
+This project was built to run on Python 3.9. Refer to the !(Python installation guide)[https://www.python.org/downloads/] for more instructions. Alternatively, if Anaconda is installed, a separate conda environment can be created using the following:
 ```bash
 conda create -n finsearch_backend_querier python=3.9
 ```
@@ -55,7 +55,7 @@ The Querier microservice is deployed on Apache 2. To run the application on the 
     ```sh
     sudo cp -r querier_app /var/www/html/
     ```
-2. Copy the [`FinsearchQuerier.conf` file] into the `/etc/apache2/sites-available` directory
+2. Copy the [`FinsearchQuerier.conf` file](FinsearchQuerier.conf) into the `/etc/apache2/sites-available` directory
     ```sh
     sudo cp FinsearchQuerier.conf /etc/apache2/sites-available/
     ```
