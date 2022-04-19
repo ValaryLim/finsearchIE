@@ -12,6 +12,7 @@ The Querier microservice is served by Apache 2. If you wish to deploy the server
 1. Install Apache Server
     ```sh
     apt-get install apache2
+    sudo apt-get install libapache2-mod-wsgi-py3
     ```
 2. Start Apache Process
     ```sh
@@ -40,7 +41,7 @@ The Querier microservice is served by Apache 2. If you wish to deploy the server
 To start the project locally:
 1. Move into the FinSearch Backend Querier Microservice Application directory
     ```sh
-    cd finsearchIE/finsearch/finsearch_backend/querier/app/
+    cd finsearchIE/finsearch/finsearch_backend/querier/finsearch_querier/
     ```
 2. Run application
     ```sh
@@ -48,19 +49,40 @@ To start the project locally:
     ```
 
 ## Deployment
-The Querier microservice is deployed on Apache2. We provide the following installation instructions
+The Querier microservice is deployed on Apache 2. To run the application on the Apache server:
 
-## Instructions for Running on Apache Server
-We provide a version of the Querier microservice with Apache2 configurations to be hosted on a server. 
-```
-#  Restart Process
-/etc/init.d/apache2 restart
-```
-
-### Configure Apache Server
-1. Copy the files in [finsearchIE/finsearch_backend_query/apache/sites-available/](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_query/apache/sites-available/) into `/etc/apache2/sites-available/` directory
-2. Copy the files in [finsearchIE/finsearch_backend_query/apache/html/](https://github.com/ValaryLim/finsearchIE/tree/main/finsearch_backend_query/apache/html/) into `/var/www/html/` directory
-3. Restart Apache2 by calling `/etc/init.d/apache2 restart`
+1. Copy the [`finsearch_querier` app](finsearch_querier/) directory into your local `/var/www/html` directory
+    ```sh
+    sudo cp -r querier_app /var/www/html/
+    ```
+2. Copy the [`FinsearchQuerier.conf` file] into the `/etc/apache2/sites-available` directory
+    ```sh
+    sudo cp FinsearchQuerier.conf /etc/apache2/sites-available/
+    ```
+3. Retrieve your Machine's IP Address
+    ```sh
+    curl ifconfig.me
+    ```
+4. Retrieve your Python path
+    ```sh
+    which python
+    ```
+5. Modify the `FinsearchQuerier.conf` file in  `/etc/apache2/sites-available`:
+    - Replace the ServerName with your Machine's IP Address
+    - Replace `python-path` variable in WSGIDaemonProcess (Line 6) with your Python path retrieved
+    - Replace `python-home` variable in WSGIDaemonProcess (Line 6) with your Python home (e.g. If your Python path shows `/home/vlim/anaconda3/bin/python`, then your Python home will be `/home/vlim/anaconda3`)
+6. Enable Finsearch Querier
+    ```sh
+    sudo a2ensite FinsearchQuerier.conf
+    ```
+7. Disable Default Site
+    ```sh
+    a2dissite 000-default.conf
+    ```
+8. Restart the Apache Process
+    ```sh
+    /etc/init.d/apache2 restart
+    ```
 
 ## Built With
 * [Python](https://www.python.org/)
