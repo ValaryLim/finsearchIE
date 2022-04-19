@@ -1,9 +1,4 @@
 # Searchable Financial Knowledge Base
-[![Contributors][contributors-shield]][https://github.com/ValaryLim/finsearchIE/graphs/contributors]
-[![Forks][forks-shield]][https://github.com/ValaryLim/finsearchIE/network/members]
-[![Stargazers][stars-shield]][https://github.com/ValaryLim/finsearchIE/stargazers]
-[![MIT License][license-shield]][LICENSE.txt]
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/valarylim/]
 
 This repository contains code and instructions for the following processes:
 1. Scraping financial abstracts
@@ -46,7 +41,7 @@ FinSearch is hosted on [http://finsearch.surge.sh](http://finsearch.surge.sh).
 - Vue.js
 
 ## Authors
-Valary Lim Wan Qian - [Github](https://github.com/ValaryLim) | [Email](mailto:valarylim@outlook.com)
+Valary Lim Wan Qian - [Github](https://github.com/ValaryLim) | [Email](mailto:valarylim@outlook.com) | [LinkedIn](https://www.linkedin.com/in/valarylim/)
 
 
 ## License
