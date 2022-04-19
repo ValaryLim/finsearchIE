@@ -7,13 +7,6 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import os
-
-def make_directory(filedir):
-    isExist = os.path.exists(filedir)
-    if not isExist:
-        # Create a new directory because it does not exist 
-        os.makedirs(filedir)
 
 def load_json(filename):
     with open(filename, 'r') as json_file:

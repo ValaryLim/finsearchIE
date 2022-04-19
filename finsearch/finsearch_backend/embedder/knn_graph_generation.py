@@ -8,30 +8,26 @@ Saves data into same file directory
 To run this file, call:
 python preprocessing.py (model_name)
 '''
+import os
 import sys
 import utils
 import numpy as np
-
-# EXAMPLE DATA PATHS
-# data_list = [
-#     'data/finbert/coarse.jsonl',
-#     'data/finbert/granular.jsonl',
-#     'data/finmultiqa/coarse.jsonl',
-#     'data/finmultiqa/granular.jsonl',
-#     'data/msmarco/coarse.jsonl',
-#     'data/msmarco/granular.jsonl',
-#     'data/multiqa/coarse.jsonl',
-#     'data/multiqa/granular.jsonl',
-# ]
 
 if __name__ == "__main__":
     # retrieve input embedder name
     embedder_name = sys.argv[1]
     
-    # generate paths
-    data_names = [f"data/{embedder_name}/coarse.jsonl", f"data/{embedder_name}/granular.jsonl"]
-    info_names = [f"data/{embedder_name}/coarse_info.jsonl", f"data/{embedder_name}/granular_info.jsonl"]
-    embd_names = [f"data/{embedder_name}/coarse_train.npy", f"data/{embedder_name}/granular_train.npy"]
+    # generate embedder path
+    embedder_path = f"finsearch_embedder/data/{embedder_name}/"
+
+    # return error if does not exist
+    if not os.path.exists(embedder_path):
+        raise NameError("Embedder path does not exist. Embedder is not valid name.")
+    
+    # generate data paths
+    data_names = [f"{embedder_path}/coarse.jsonl", f"{embedder_path}/granular.jsonl"]
+    info_names = [f"{embedder_path}/coarse_info.jsonl", f"{embedder_path}/granular_info.jsonl"]
+    embd_names = [f"{embedder_path}/coarse_train.npy", f"{embedder_path}/granular_train.npy"]
     
     for i in range(len(data_names)):
         # extract info
