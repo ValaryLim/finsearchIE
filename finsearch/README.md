@@ -1,22 +1,33 @@
 # FinSearch
 FinSearch is a service that allows users to query for relevant abstracts from our financial knowledge base, FinKB. Users enter 2 keywords or phrases, and the service trawls through its corpus of almost 1,000,000 relational triplets and aggregates them to return the most relevant results. The service has a separate frontend and backend system, with the backend consisting of two separate microservices, a Querier, and an Embedder.
 
-## [FinSearch Frontend](finsearch_frontend/)
-![](imgs/finsearch-frontend.gif)
-
-## [FinSearch Backend](finsearch_backend/)
-
-### [Embedder Microservice](finsearch_backend/embedder/)
-
-### [Querier Microservice](finsearch_backend/querier)
-
-
 ## Table of Contents
-- [Folder Structure](#folder-structure)
+- [FinSearch Frontend](#finsearch-frontend)
+- [FinSearch Backend](#finsearch-backend)
+    - [Querier Microservice](#querier-microservice)
+    - [Embedder Microservice](#embedder-microservice)
 - [Installation and Usage](#installation-and-usage)
 - [Contributors](#contributors)
 - [Guides and Resources](#guides-and-resources)
 - [License](#license)
+
+## FinSearch Frontend
+The [FinSearch Frontend](finsearch_frontend/) is a responsive and aesthetically pleasing user interface that users can interact with to fetch data from our system. The application is intuitive and allows users to easily identify what parameters the service can accept and tweak.
+
+The Frontend makes use of calls Rest API endpoints exposed by the [Backend Querier Microservice](#querier-microservice) to retrieve data from our Backend, and renders it in the form of a sortable table.
+
+![](imgs/finsearch-frontend.gif)
+
+We provide more details of how to run the application in the [FinSearch Frontend Directory](finsearch_frontend/).
+
+## FinSearch Backend
+
+### Querier Microservice
+
+### Embedder Microservice
+
+
+
 
 ## Folder Structure
 This directory is split into 3 components
