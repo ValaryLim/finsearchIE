@@ -23,6 +23,27 @@ We have provided more details in our paper.
 
 ## Data Preparation
 ### Train Embedder Models
+We train two custom Embedder models, one of which `finmultiqa`, has been selected and integrated into our Embedder application. We provide the scripts in the `embedding_models/` directory.
+- To train FinMultiQA:
+    ```sh
+    python finmultiqa_training.py
+    ```
+- To train FinMsMarcoQA:
+    ```sh
+    python finmsmarco_training.py
+    ```
+Both these models will be automatically saved within the `finsearch_embedder/models/` directory.
+
+We also provide `evaluate_encoder.py`, the script used to evaluate all Encoder models. To run the script:
+1. Modify `evaluate_encoder.py` to include the list of Encoders you wish to compare
+2. Ensure you are in the `embedding_models/` directory
+    ```sh
+    cd finsearchIE/finsearch/finsearch_backend/embedder/embedding_models/
+    ```
+3. Run the script
+    ```sh
+    python evaluate_encoder.py
+    ```
 
 ### Generate Model Embeddings
 

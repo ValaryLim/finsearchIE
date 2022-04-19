@@ -1,24 +1,17 @@
 import encoder
-import os 
-import sys
-# set working directory
-sys.path.append(os.getcwd())
 import utils
 
-# Load finbert model
+# LOAD MODELS 
+# MODIFY THIS LIST IF YOU WISH TO COMPARE OTHER MODELS
 models = {
     'stsb_multiqa': encoder.Encoder('models/stsb-multi-qa-MiniLM-L6-cos-v1'),
     'finbert': encoder.Encoder('ProsusAI/finbert'),
     'multiqa': encoder.Encoder('multi-qa-MiniLM-L6-cos-v1'),
     'msmarco': encoder.Encoder('msmarco-MiniLM-L6-cos-v5'),
     'roberta': encoder.Encoder('stsb-roberta-large'),
-    'fin_multiqa': encoder.Encoder('models/fin-multiqa'),
-    'fin_msmarco': encoder.Encoder('models/fin-msmarco')
+    'fin_multiqa': encoder.Encoder('../finsearch_embedder/models/finmultiqa'),
+    'fin_msmarco': encoder.Encoder('../finsearch_embedder/models/finmsmarco')
 }
-# EVALUATION RESULTS:
-# {'stsb_multiqa': 0.44779870183517534, 'finbert': 0.16960061550140382, 'multiqa': 0.465436761106054, 
-# 'msmarco': 0.4332077649856607, 'roberta': 0.3410490820556879, 'fin_multiqa': 0.48745486815770467, 
-# 'fin_msmarco': 0.44320187172542014, 'fin_tapt':0.24985654120643934}
 
 def compute_similarity(e1, e2, model):
     e1_embedding = models[model].encode_entity(e1.strip())
@@ -48,7 +41,7 @@ def compute_relation_diff(e1, e2, e3, model):
 
 if __name__ == "__main__":
     # load relational test data
-    relational_data = utils.load_json("data/finsearch/test.json")
+    relational_data = utils.load_json("finsemantic/test.json")
 
     # store average scores
     avg_scores = {}
