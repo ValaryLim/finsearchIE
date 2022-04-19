@@ -1,9 +1,7 @@
 import os
 import sys
 import logging
-import ast
 import json
-import pandas as pd
 
 import utils
 import scraper

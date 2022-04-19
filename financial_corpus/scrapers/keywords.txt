@@ -1,0 +1,113 @@
+Bookrunner
+Brand
+Broker
+Business
+Buyout
+Capital
+Cartel
+Collusion
+Competition
+Corporate
+Corporation
+Cost
+Counterparty
+Credit
+Currency
+Debt
+Delisting
+Demand
+Derivative
+Discount
+Diversification
+Dividend
+Earnings
+Econometric
+Economic
+Efficient
+Emerging markets
+Employment
+Equilibrium
+Equity
+Exchange
+Exchange rate
+Fair value
+Finance
+Financial
+Financing
+Firm
+Fiscal
+Forecast
+Funding
+Growth
+Hedge fund
+Hedging
+Income
+Index
+Indicators
+Inflation
+Insurance
+Interest rates
+Intermediary
+Investment
+Investor
+Initial public offering
+Leverage
+Liability
+Life cycle
+Liquidation
+Loan
+Losses
+Macroeconomic
+Management
+Market
+Market maker
+Mean-variance
+Merger
+Microeconomic
+Microstructure
+Monetary
+Monopolistic
+Monopoly
+Oligopoly
+Optimisation
+Options
+Order book
+Ownership
+Overvaluation
+Payout
+Pension
+Performance
+Portfolio
+Price
+Pricing
+Profit
+Quota
+Rates
+Resettlement
+Restructuring
+Returns
+Revenue
+Risk
+Sale
+Securities
+Seller
+Shareholder
+Sharpe
+Spreads
+Stock
+Strategy
+Structure
+Structuring
+Supply
+Supply chain
+Syndicate
+Tax
+Tenure
+Trade
+Trading
+Transaction
+Underwrite
+Valuation
+Value at risk
+Wage
+Yield
