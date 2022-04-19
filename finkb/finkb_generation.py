@@ -3,9 +3,18 @@ import json
 import encoder
 
 # load jsonl files
-RAW_PATHS = ["data/predictions/finkb/finance_coarse_coref.jsonl", "data/predictions/finkb/finance_granular_coref.jsonl"][:1]
-PROC_PATHS = ["data/finkb/finance_coarse_coref.jsonl", "data/finkb/finance_granular_coref.jsonl"]
-SENT_PATHS = ["data/finkb/finance_coarse_sents.json", "data/finkb/finance_granular_sents.json"]
+RAW_PATHS = [
+    "data/predictions/finkb/finance_coarse_coref.jsonl", 
+    "data/predictions/finkb/finance_granular_coref.jsonl"
+]
+PROC_PATHS = [
+    "data/finkb/finance_coarse_coref.jsonl", 
+    "data/finkb/finance_granular_coref.jsonl"
+]
+SENT_PATHS = [
+    "data/finkb/finance_coarse_sents.json", 
+    "data/finkb/finance_granular_sents.json"
+]
 
 def extract_relations(json_list):
     extracted_rels = [] # fields: E1 E2 REL DOC_KEY E1_START E1_END E2_START E2_END
