@@ -7,26 +7,31 @@ import os
 sys.path.append(os.getcwd())
 import utils
 
-# load jsonl files
-RAW_PATHS = [
-    "data/predictions/finkb/finance_coarse_coref.jsonl", 
-    "data/predictions/finkb/finance_granular_coref.jsonl"
-]
-PROC_PATHS = [
-    "data/finkb/finance_coarse_coref.jsonl", 
-    "data/finkb/finance_granular_coref.jsonl"
-]
-SENT_PATHS = [
-    "data/finkb/finance_coarse_sents.json", 
-    "data/finkb/finance_granular_sents.json"
-]
+# LOAD MODELS
 MODELS = {
     'finbert': 'ProsusAI/finbert',
     'multiqa': 'multi-qa-MiniLM-L6-cos-v1',
     'msmarco': 'msmarco-MiniLM-L6-cos-v5',
-    'finmsmarco': 'models/fin-msmarco',
-    'finmultiqa': 'models/fin-multiqa'
+    'finmsmarco': 'finsearch_embedder/models/finmsmarco',
+    'finmultiqa': 'finsearch_embedder/models/finmultiqa'
 }
+
+# PREDICTION FILE PATHS
+RAW_PATHS = [
+    "finsearch_embedder/data/finkb/finance_coarse_coref.jsonl", 
+    "finsearch_embedder/data/finkb/finance_granular_coref.jsonl"
+]
+
+# SAVE FILE PATHS
+PROC_PATHS = [
+    "finsearch_embedder/data/finkb/finance_coarse_coref.jsonl", 
+    "finsearch_embedder/data/finkb/finance_granular_coref.jsonl"
+]
+SENT_PATHS = [
+    "finsearch_embedder/data/finkb/finance_coarse_sents.json", 
+    "finsearch_embedder/data/finkb/finance_granular_sents.json"
+]
+
 
 class FinKBGenerator:
     def __init__(self, model_name):
@@ -77,7 +82,7 @@ if __name__ == "__main__":
         print("Generating output for model:", model_code)
 
         # generate directory name
-        utils.make_dir("data/" + model_code)
+        utils.make_dir(f"finsearch_embedder/data/{model_code}")
 
         for i in range(len(RAW_PATHS)):
             # load jsonl path
@@ -98,5 +103,3 @@ if __name__ == "__main__":
             custom_sent_path = SENT_PATHS[i].replace("finkb", model_code)
             with open(custom_sent_path, 'w') as outfile:
                 json.dump(sent_dict, outfile)
-
-

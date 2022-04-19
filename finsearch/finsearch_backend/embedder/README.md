@@ -14,12 +14,15 @@ We have provided more details in our paper.
 ## Directory Structure
 
     .
-    ├── finsearch_embedder    
-    ├── embedding_models
-    │   ├── querier
-    |   ├── embedder
-    │   └── embedding models
-    └── data_preparation.py
+    ├── embedding_models                    # Files to Train and Evaluate Embedder Models
+    │   ├── finsemantic                         # FinSemantic Dataset
+    |   ├── evaluate_encoder.py                 # Script to Evaluate Encoder
+    |   ├── finmsmarco_training.py              # Script to Train FinMsMarcoQA
+    │   └── finmultiqa_training.py              # Script to Train FinMultiQA
+    ├── finsearch_embedder                  # Embedder Flask Application
+    ├── finkb_embeddings_generation.py      # Script to Generate Embeddings from FinKB
+    ├── knn_graph_generation.py             # Script to Generate Graphs from Embeddings
+    └── requirements.txt                    # Requirements
 
 ## Data Preparation
 ### Train Embedder Models
@@ -45,9 +48,15 @@ We also provide `evaluate_encoder.py`, the script used to evaluate all Encoder m
     python evaluate_encoder.py
     ```
 
-### Generate Model Embeddings
+### Generate FinKB Embeddings
+The `finkb_embeddings_generation.py` script generates embeddings for all models. To run the script:
+1. Transfer the `finance_coarse_coref.jsonl` and `finance_granular_coref.jsonl` relational triplet prediction files into the `finsearch_embedder/data/finkb/` directory.
+2. Run the script
+    ```sh
+    python finkb_embeddings_generation.py
+    ```
 
-### Generate KNN Graphs from Model Embeddings
+### Generate KNN Graphs from FinKB Embeddings
 The Embedder Microservice requries a data preparation step to generate the k-nearest neighbours graph required for Approximate Nearest Neighbour Descent. To create the k-nearest neighbour graph:
 1. Ensure that the .jsonl files containing relational triplet embeddings produced in Step 1 are in `finsearchIE/finsearch/finsearch_backend/embedder/finsearch_embedder/data/(model_name)/` directory, where `model_name` is the name of the Embedder model, e.g. `ProsusAI/finbert` for FinBERT.
 2. Call the [knn_graph_generation.py script](knn_graph_generation.py)
