@@ -22,11 +22,11 @@ We have provided more details in our paper.
     └── data_preparation.py
 
 ## Data Preparation
-The Embedder microservice requires 3 main pre-processing steps to function, (1) generating embeddings of the relational triplets in FinKB, (2) generating a k-nearest neighbours graph required for Approximate Nearest Neighbour Descent Search, and (3) integrating data into Embedder application. We provide details on the required steps below.
+### Train Embedder Models
 
 ### Generate Model Embeddings
 
-### 
+### Generate KNN Graphs from Model Embeddings
 The Embedder Microservice requries a data preparation step to generate the k-nearest neighbours graph required for Approximate Nearest Neighbour Descent. To create the k-nearest neighbour graph:
 1. Ensure that the .jsonl files containing relational triplet embeddings produced in Step 1 are in `finsearchIE/finsearch/finsearch_backend/embedder/finsearch_embedder/data/(model_name)/` directory, where `model_name` is the name of the Embedder model, e.g. `ProsusAI/finbert` for FinBERT.
 2. Call the [knn_graph_generation.py script](knn_graph_generation.py)
