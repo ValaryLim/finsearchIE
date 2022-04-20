@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import tqdm
@@ -53,7 +54,13 @@ def _scrape_sagepub_journal(journal_name, journal_id, min_year, min_volume_no, n
                 continue
     return df
 
-def scrape_sagepub(path):
+if __name__ == "__main__":
+    sagepub_dir = 'data/sagepub'
+
+    # create directory if does not exist
+    if not os.path.exists(sagepub_dir):
+        os.makedirs(sagepub_dir)
+
     for journal_id, journal_details in _sagepub_journals.items():
         journal_name = journal_details['journal_name']
         min_year = journal_details['min_year']
@@ -63,4 +70,4 @@ def scrape_sagepub(path):
         df = _scrape_sagepub_journal(journal_name, journal_id, min_year, min_volume_no, num_issues)
 
         filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-        df.to_csv(f'{path}/sagepub/{filename}', index=False)
+        df.to_csv(f'{sagepub_dir}/{filename}', index=False)

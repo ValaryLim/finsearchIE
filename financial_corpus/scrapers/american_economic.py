@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import tqdm
@@ -14,7 +15,14 @@ _american_economic_journals = {
     'mic': 'American Economic Journal Microeconomics'
 }
 
-def scrape_american_economic(path):
+if __name__ == "__main__":
+    american_economic_dir = 'data/american_economic'
+
+    # create directory if does not exist
+    if not os.path.exists(american_economic_dir):
+        os.makedirs(american_economic_dir)
+    
+    # retrieve abstracts by journal
     for journal_id, journal_name in _american_economic_journals.items():
         # retrieve issues
         journal_response = requests.get(f'https://www.aeaweb.org/journals/{journal_id}/issues')
@@ -59,6 +67,6 @@ def scrape_american_economic(path):
                 continue
         
         filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-        df.to_csv(f'{path}/american_economic/{filename}', index=False)
+        df.to_csv(f'{american_economic_dir}/{filename}', index=False)
     
     

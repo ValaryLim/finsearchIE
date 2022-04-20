@@ -1,6 +1,6 @@
+import os
 import requests
 from bs4 import BeautifulSoup
-import tqdm
 import pandas as pd
 from datetime import datetime
 
@@ -23,7 +23,13 @@ _oxford_academic_journals = {
     6182: 'The Economic Journal'
 }
 
-def scrape_oxford_academic(path):
+if __name__ == "__main__":
+    oxford_academic_dir = 'data/oxford_academic'
+
+    # create directory if does not exist
+    if not os.path.exists(oxford_academic_dir):
+        os.makedirs(oxford_academic_dir)
+
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'}
     for journal_id, journal_name in _oxford_academic_journals.items():
         df = pd.DataFrame()
@@ -52,4 +58,4 @@ def scrape_oxford_academic(path):
                 continue
 
         filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-        df.to_csv(f'{path}/oxford_academic/{filename}', index=False)
+        df.to_csv(f'{oxford_academic_dir}/{filename}', index=False)

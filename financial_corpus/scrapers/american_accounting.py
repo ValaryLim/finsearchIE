@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import tqdm
@@ -53,7 +54,14 @@ def _scrape_american_accounting_journal(journal_name, journal_id, min_year, min_
                 continue
     return df
 
-def scrape_american_accounting(path):
+if __name__ == "__main__":
+    american_accounting_dir = 'data/american_accounting'
+
+    # create directory if does not exist
+    if not os.path.exists(american_accounting_dir):
+        os.makedirs(american_accounting_dir)
+    
+    # retrieve abstracts by journal
     for journal_id, journal_details in _american_accounting_journals.items():
         journal_name = journal_details['journal_name']
         min_year = journal_details['min_year']
@@ -63,4 +71,4 @@ def scrape_american_accounting(path):
         df = _scrape_american_accounting_journal(journal_name, journal_id, min_year, min_volume_no, num_issues)
 
         filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-        df.to_csv(f'{path}/american_accounting/{filename}', index=False)
+        df.to_csv(f'{american_accounting_dir}/{filename}', index=False)

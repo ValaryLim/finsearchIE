@@ -1,3 +1,4 @@
+import os
 from elsapy.elsclient import ElsClient
 from elsapy.elssearch import ElsSearch
 import json
@@ -33,13 +34,13 @@ def _search_elsevier(client, query, total_count=5000):
     return results
 
 
-def query_elsevier(query, path, config):
+def query_elsevier(query, path, apikey):
     headers = {
-        'X-ELS-APIKey': config['apikey'],
+        'X-ELS-APIKey': apikey,
         'Accept': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
-    client = ElsClient(config['apikey'])
+    client = ElsClient(apikey)
 
     search_results = _search_elsevier(client, f"KEY({query.lower()})")
     
@@ -67,4 +68,21 @@ def query_elsevier(query, path, config):
             continue
     
     query_filename = '_'.join(query.lower().split(' '))
-    df.to_csv(f'{path}/elsevier/{query_filename}.csv', index=False)
+    df.to_csv(f'{path}/{query_filename}.csv', index=False)
+
+if __name__ == "__main__":
+    # set file paths
+    keywords_path = 'keywords.txt'
+    elsevier_dir = 'data/elsevier'
+    elsevier_api_key = 'INSERTKEYHERE'
+
+    # create directory if does not exist
+    if not os.path.exists(elsevier_dir):
+        os.makedirs(elsevier_dir)
+
+    # retrieve keywords
+    with open(keywords_path) as file:
+        lines = [line.rstrip() for line in file]
+    
+    for query in lines:
+        query_elsevier(query, elsevier_dir, elsevier_api_key)

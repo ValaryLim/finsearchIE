@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import tqdm
@@ -59,7 +60,14 @@ def _scrape_wiley_journal(journal_name, journal_id, min_year, min_volume_no, num
     
     return df
 
-def scrape_wiley(path):
+if __name__ == "__main__":
+    wiley_dir = 'data/wiley'
+
+    # create directory if does not exist
+    if not os.path.exists(wiley_dir):
+        os.makedirs(wiley_dir)
+
+    # retrieve abstracts from wiley journal
     for journal_id, journal_details in _wiley_journals.items():
         journal_name = journal_details['journal_name']
         min_year = journal_details['min_year']
@@ -69,4 +77,4 @@ def scrape_wiley(path):
             df = _scrape_wiley_journal(journal_name, journal_id, min_year, min_volume_no, num_issues)
 
             filename = "_".join(journal_name.lower().split(" ")) + ".csv"
-            df.to_csv(f'{path}/wiley/{filename}', index=False)
+            df.to_csv(f'{wiley_dir}/{filename}', index=False)
