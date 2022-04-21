@@ -5,13 +5,6 @@ import os
 import sys
 import json
 import copy
-import tqdm
-import numpy as np
-import pandas as pd
-
-# set working directory
-sys.path.append(os.getcwd())
-import utils
 
 # set colors
 REL_COLORS = {
@@ -29,6 +22,10 @@ REL_COLORS = {
     "UNCERTAIN": "#abc4ff",
     "RELATION": "#d1d1d1"
 }
+
+def make_dir(filedir):
+    if not os.path.exists(filedir):
+        os.makedirs(filedir)
 
 def save_json(file_path, abstract_list):
     with open(file_path, "w") as f:
@@ -54,7 +51,7 @@ def load_pred_data(pred_path):
             pred_data.append(json.loads(line))
     return pred_data
 
-def format_data(pred_data, raw_dat, gold=False):
+def format_data(pred_data, raw_data, gold=False):
     # format predictions suitable for prodigy
     formatted_data = []
     for pred in pred_data:
@@ -109,47 +106,23 @@ def format_data(pred_data, raw_dat, gold=False):
     return formatted_data
 
 if __name__ == "__main__": 
-    model_names = ['openie', 'srl', 'dygiebert', 'dygiefinbert']
-    dataset_names = {
-        'external_zhiren': {
-            'dataset_types': ['coarse/test.jsonl', 'coarse_coref/test.jsonl', 'granular/test.jsonl', 'granular_coref/test.jsonl'],
-            'raw_prodigy_paths': ['data/prodigy_raw/external_zhiren.jsonl']
-        },
-        'finance': {
-            'dataset_types': [
-                'coarse/train.jsonl', 'coarse/test.jsonl', 'coarse/dev.jsonl', \
-                'granular/train.jsonl', 'granular/test.jsonl', 'granular/dev.jsonl', \
-                'coarse_coref/train.jsonl', 'coarse_coref/test.jsonl', 'coarse_coref/dev.jsonl', \
-                'granular_coref/train.jsonl', 'granular_coref/test.jsonl', 'granular_coref/dev.jsonl'
-            ],
-            'raw_prodigy_paths': ['data/prodigy_raw/finance_granular_1.jsonl', 'data/prodigy_raw/finance_granular_2.jsonl']
-        }
-    }
+    prediction_data_file = sys.argv[1]
+    raw_data_file = sys.argv[2]
+    formatted_data_path = sys.argv[3]
     
-    for model in model_names:
-        for dataset_name, dataset_dict in dataset_names.items():
-            # read raw prodigy paths
-            raw_prodigy_paths = dataset_dict['raw_prodigy_paths']
-            raw_data = load_raw_data(raw_prodigy_paths)
+    # read predicted data path
+    pred_data = load_pred_data(prediction_data_file)
 
-            dataset_types = dataset_dict['dataset_types']
-            pred_paths = [f"data/predictions/{model}/{dataset_name}/{x}" for x in dataset_types]
-            save_pred_dirs = [f"data/prodigy_predictions/{model}/{dataset_name}/{x.split('/')[0]}/" for x in dataset_types]
-            save_gold_dirs = [f"data/prodigy_gold_predictions/{model}/{dataset_name}/{x.split('/')[0]}/" for x in dataset_types]
-            save_pred_paths = [f"data/prodigy_predictions/{model}/{dataset_name}/{x}" for x in dataset_types]
-            save_gold_paths = [f"data/prodigy_gold_predictions/{model}/{dataset_name}/{x}" for x in dataset_types]
-            
-            for i in range(len(dataset_types)):
-                print(pred_paths[i])
-                # read predictions
-                pred_data = load_pred_data(pred_paths[i])
+    # read raw data
+    raw_data = load_raw_data(raw_data_file)
 
-                # format predicted data
-                formatted_pred_data = format_data(pred_data, raw_data, gold=False)
-                formatted_gold_data = format_data(pred_data, raw_data, gold=True)
+    # format predicted data
+    formatted_pred_data = format_data(pred_data, raw_data, gold=False)
+    formatted_gold_data = format_data(pred_data, raw_data, gold=True)
 
-                # save as json file
-                utils.make_dir(save_pred_dirs[i])
-                utils.make_dir(save_gold_dirs[i])
-                save_json(save_pred_paths[i], formatted_pred_data)
-                save_json(save_gold_paths[i], formatted_gold_data)
+    # save as json file
+    gold_path = f"{formatted_data_path}/gold.json"
+    pred_path = f"{formatted_data_path}/pred.json"
+    make_dir(formatted_data_path)
+    save_json(gold_path, formatted_pred_data)
+    save_json(pred_path, formatted_gold_data)
