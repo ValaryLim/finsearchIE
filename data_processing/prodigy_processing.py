@@ -1,6 +1,3 @@
-'''
-Processes raw prodigy output from labelling into format accepted by DyGIE++
-'''
 import os
 import sys
 import json
@@ -10,23 +7,6 @@ import spacy
 import random
 import numpy as np
 import pandas as pd
-
-# set working directory
-sys.path.append(os.getcwd())
-import utils
-
-GRANULAR_FULL = {
-    'ATTRIBUTE': 'ATTRIBUTE',
-    'FUNCTION': 'FUNCTION',
-    'POS': 'POSITIVE',
-    'NEG': 'NEGATIVE',
-    'NEU': 'NEUTRAL',
-    'NONE': 'NONE',
-    'UNCERTAIN': 'UNCERTAIN',
-    'CONDITION': 'CONDITION',
-    'BETTER': 'COMPARISON',
-    'COREF': 'COREF'
-}
 
 GRANULAR_TO_COARSE = {
     'ATTRIBUTE': 'DIRECT',
@@ -40,6 +20,10 @@ GRANULAR_TO_COARSE = {
     'COMPARISON': 'INDIRECT'
 }
 
+def make_dir(filedir):
+    if not os.path.exists(filedir):
+        os.makedirs(filedir)
+    
 def granular_to_coarse(relations):
     coarse_relations = []
     for rel_sentence in relations:
@@ -70,13 +54,15 @@ def unpack_relations(relations_unprocessed, sentences_index, ner):
         head_token_end = relation['head_span']['token_end']
         child_token_start = relation['child_span']['token_start']
         child_token_end = relation['child_span']['token_end']
-        relation_label = GRANULAR_FULL[relation['label']]
+        relation_label = relation['label']
         
-        if relation_label != 'COREF':
+        if relation_label != 'COREFERENCE':
+            # record relation
             token_sentence_no = np.argmax(np.array(sentences_index) > head_token_start) - 1
             if ([child_token_start, child_token_end, 'ENTITY'] in ner[token_sentence_no]) and ([head_token_start, head_token_end, 'ENTITY'] in ner[token_sentence_no]): 
                 relations[token_sentence_no].append([head_token_start, head_token_end, child_token_start, child_token_end, relation_label])
         else:
+            # record coreference
             key = (head_token_start, head_token_end)
             value = (child_token_start, child_token_end)
             if key in coref_graph:
@@ -127,22 +113,29 @@ def save_json(file_path, abstract_list):
         for abstract in abstract_list:
             print(json.dumps(abstract), file=f)
 
-def process_finmec_jsonl(annotated_dir, processed_dir, nlp_name='en_core_web_sm'):
-    # set up spacy
+if __name__ == "__main__": 
+    annotated_dir = sys.argv[1]
+    processed_dir = sys.argv[2]
+
+    # load nlp model
+    nlp_name='en_core_web_sm'
     nlp = spacy.load(nlp_name) 
 
-    granular_coref_abstract_list, coarse_coref_abstract_list = [], []
     granular_abstract_list, coarse_abstract_list = [], []
 
-    for annotated_jsonl_path in glob.glob(annotated_dir + "finance_*.jsonl"):
+    for annotated_jsonl_path in glob.glob(f"{annotated_dir}/*.jsonl"):
         with open(annotated_jsonl_path, 'r') as json_file:
             json_list = list(json_file)
 
         for json_str in tqdm.tqdm(json_list):
+            # load sample
             sample = json.loads(json_str)
+
+            # reject if sample is not accepted
             if sample['answer'] != 'accept': # ignore
                 continue
-
+            
+            # retrieve sample information
             doc_id = sample['meta']['id']
             text = sample['text']
             
@@ -158,29 +151,21 @@ def process_finmec_jsonl(annotated_dir, processed_dir, nlp_name='en_core_web_sm'
             
             # tag relations
             relations_unprocessed = sample['relations']
-            relations, coref_graph = unpack_relations(relations_unprocessed, sentences_index, ner)
-            coarse_relations = granular_to_coarse(relations)
+            granular_relations, coref_graph = unpack_relations(relations_unprocessed, sentences_index, ner)
+            coarse_relations = granular_to_coarse(granular_relations)
             
             # tag clusters
             clusters = unpack_clusters(coref_graph)
             
-            granular_coref_abstract_dict = {
+            granular_dict = {
                 'clusters': clusters,
                 'sentences': sentences,
                 'ner': ner,
-                'relations': relations,
+                'relations': granular_relations,
                 'doc_key': doc_id
             }
 
-            granular_abstract_dict = {
-                'clusters': [],
-                'sentences': sentences,
-                'ner': ner,
-                'relations': relations,
-                'doc_key': doc_id
-            }
-
-            coarse_coref_abstract_dict = {
+            coarse_dict = {
                 'clusters': clusters,
                 'sentences': sentences,
                 'ner': ner,
@@ -188,32 +173,17 @@ def process_finmec_jsonl(annotated_dir, processed_dir, nlp_name='en_core_web_sm'
                 'doc_key': doc_id
             }
 
-            coarse_abstract_dict = {
-                'clusters': [],
-                'sentences': sentences,
-                'ner': ner,
-                'relations': coarse_relations,
-                'doc_key': doc_id
-            }
-
-            granular_coref_abstract_list.append(granular_coref_abstract_dict)
-            granular_abstract_list.append(granular_abstract_dict)
-            coarse_coref_abstract_list.append(coarse_coref_abstract_dict)
-            coarse_abstract_list.append(coarse_abstract_dict)
-            
+            granular_abstract_list.append(granular_dict)
+            coarse_abstract_list.append(coarse_dict)
     
     # remove duplicates
-    filtered_granular_coref_abstract_list = process_abstract_list(granular_coref_abstract_list)
     filtered_granular_abstract_list = process_abstract_list(granular_abstract_list)
-    filtered_coarse_coref_abstract_list = process_abstract_list(coarse_coref_abstract_list)
     filtered_coarse_abstract_list = process_abstract_list(coarse_abstract_list)
 
     # dump data
     processed_datasets = {
-        'finance/granular_coref/': filtered_granular_coref_abstract_list,
-        'finance/granular/': filtered_granular_abstract_list,
-        'finance/coarse_coref/': filtered_coarse_coref_abstract_list,
-        'finance/coarse/': filtered_coarse_abstract_list
+        'finmechanic_granular': filtered_granular_abstract_list,
+        'finmechanic_coarse': filtered_coarse_abstract_list
     }
 
     # derive train and test mask
@@ -230,110 +200,9 @@ def process_finmec_jsonl(annotated_dir, processed_dir, nlp_name='en_core_web_sm'
         dev_set = [x for x, y in zip(abstract_list, dev_mask) if y]
         test_set = [x for x, y in zip(abstract_list, test_mask) if y]
         # save jsons
-        utils.make_dir(processed_dir + file_dir)
-        save_json(processed_dir + file_dir + 'all.json', abstract_list)
-        save_json(processed_dir + file_dir + "train.json", train_set)
-        save_json(processed_dir + file_dir + "dev.json", dev_set)
-        save_json(processed_dir + file_dir + "test.json", test_set)
-
-def process_external_jsonl(annotated_dir, processed_dir, external_filenames, nlp_name='en_core_web_sm'):
-    for filename in external_filenames:
-        # set up spacy
-        nlp = spacy.load(nlp_name) 
-
-        # set up abstract list
-        granular_coref_abstract_list, coarse_coref_abstract_list = [], []
-        granular_abstract_list, coarse_abstract_list = [], []
-
-        with open(f"{annotated_dir}{filename}.jsonl", "r") as json_file:
-            json_list = list(json_file)
-
-        for json_str in json_list:
-            sample = json.loads(json_str)
-            if sample['answer'] != 'accept': # ignore
-                continue
-
-            doc_id = sample['meta']['id']
-            text = sample['text']
-            
-            # tokenize text
-            text_doc = nlp(text)
-            sentences = [[tok.text for tok in sent] for sent in text_doc.sents]
-            sentences_index = [len(x) for x in sentences]
-            sentences_index = [0] + list(np.cumsum(sentences_index))
-            
-            # tag entities
-            entities = sample['spans']
-            ner = unpack_entities(entities, sentences_index)
-            
-            # tag relations
-            relations_unprocessed = sample['relations']
-            relations, coref_graph = unpack_relations(relations_unprocessed, sentences_index, ner)
-            coarse_relations = granular_to_coarse(relations)
-            
-            # tag clusters
-            clusters = unpack_clusters(coref_graph)
-            
-            granular_coref_abstract_dict = {
-                'clusters': clusters,
-                'sentences': sentences,
-                'ner': ner,
-                'relations': relations,
-                'doc_key': doc_id
-            }
-
-            granular_abstract_dict = {
-                'clusters': [],
-                'sentences': sentences,
-                'ner': ner,
-                'relations': relations,
-                'doc_key': doc_id
-            }
-
-            coarse_coref_abstract_dict = {
-                'clusters': clusters,
-                'sentences': sentences,
-                'ner': ner,
-                'relations': coarse_relations,
-                'doc_key': doc_id
-            }
-
-            coarse_abstract_dict = {
-                'clusters': [],
-                'sentences': sentences,
-                'ner': ner,
-                'relations': coarse_relations,
-                'doc_key': doc_id
-            }
-
-            granular_coref_abstract_list.append(granular_coref_abstract_dict)
-            granular_abstract_list.append(granular_abstract_dict)
-            coarse_coref_abstract_list.append(coarse_coref_abstract_dict)
-            coarse_abstract_list.append(coarse_abstract_dict)
-            
-        
-        # remove duplicates
-        filtered_granular_coref_abstract_list = process_abstract_list(granular_coref_abstract_list)
-        filtered_granular_abstract_list = process_abstract_list(granular_abstract_list)
-        filtered_coarse_coref_abstract_list = process_abstract_list(coarse_coref_abstract_list)
-        filtered_coarse_abstract_list = process_abstract_list(coarse_abstract_list)
-
-        # dump data
-        processed_datasets = {
-            f'{filename}/granular_coref/': filtered_granular_coref_abstract_list,
-            f'{filename}/granular/': filtered_granular_abstract_list,
-            f'{filename}/coarse_coref/': filtered_coarse_coref_abstract_list,
-            f'{filename}/coarse/': filtered_coarse_abstract_list
-        }
-
-        for file_dir, abstract_list in processed_datasets.items():
-            # save jsons
-            utils.make_dir(processed_dir + file_dir)
-            save_json(processed_dir + file_dir + 'test.json', abstract_list)
-    
-if __name__ == "__main__":
-    annotated_dir = "data/prodigy_raw/"
-    processed_dir = "data/prodigy_processed/"
-    external_filenames = ["external_zhiren"]
-    process_finmec_jsonl(annotated_dir, processed_dir)
-    process_external_jsonl(annotated_dir, processed_dir, external_filenames)
+        save_dir = f"{processed_dir}/{file_dir}"
+        make_dir(save_dir)
+        save_json(f'{save_dir}/all.json', abstract_list)
+        save_json(f'{save_dir}/train.json', train_set)
+        save_json(f'{save_dir}/dev.json', dev_set)
+        save_json(f'{save_dir}/test.json', test_set)

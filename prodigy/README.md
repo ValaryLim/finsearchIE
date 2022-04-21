@@ -66,7 +66,7 @@ We provide a Python script, [prodigy_processing.py](prodigy_processing.py), to f
     ```
 2. Call [prodigy_processing.py](prodigy_processing.py) script
     ```sh
-    python prodigy/prodigy_processing.py (downloaded_prodigy_file.jsonl) (processed_prodigy_file.jsonl)
+    python prodigy/prodigy_processing.py (downloaded_prodigy_file.jsonl) (processed_file_path)
     ```
     For example, for FinMechanic, we run:
     ```sh

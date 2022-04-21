@@ -3,10 +3,8 @@ Combines and cleans each of the raw article .csv files and saves all articles in
 Assigns unique article IDs to each article. 
 '''
 import os
-import sys
 import re
 import json
-import logging
 import glob
 import pandas as pd
 import numpy as np
