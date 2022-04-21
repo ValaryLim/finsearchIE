@@ -1,7 +1,6 @@
 """
-Function to compute F1 scores.
+Functions to compute F1 scores.
 """
-
 def safe_div(num, denom):
     if denom > 0:
         return num / denom

@@ -4,12 +4,14 @@ This directory contains information on how we train DyFinIE, generate prediction
 ## Table of Contents
 - [Directory Structure](#directory-structure)
 - [DyFinIE](#dyfinie)
-    - [DyFinIE Training](#dyfinie-training)
-    - [DyFinIE Prediction](#dyfinie-prediction)
+    - [Model Training](#model-training)
+    - [Model Evaluation](#model-evaluation)
+    - [Model Prediction](#model-prediction)
 - [Baselines](#baselines)
-    - [OpenIE]#openie)
+    - [OpenIE](#openie)
     - [SRL](#srl)
 - [Evaluation](#evaluation)
+    - [Information Extraction Evaluation](#information-extraction-evaluation)
 
 ## Directory Structure
 
@@ -19,50 +21,108 @@ This directory contains information on how we train DyFinIE, generate prediction
     │   ├── openie                      # OpenIE Predictions
     │   └── srl                         # SRL Predictions
     ├── evaluation                  # Evaluation scripts
-    │   ├── insert eval scripts here
-    │   └── insert eval scripts here
+    │   ├── ie_evaluation.py            # DyFinIE Compared to OpenIE Baselines
+    │   └── ner_evaluation.py           # DyFinIE Compared to NER Models
     └── finmechanic                 # Dataset Used to Train DyFinIE
 
-## DyFinIE Training (Dygiepp)
-We provide scripts and configurations to train DyFinIE in [finsearchIE/dyfinie/dygiepp/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/dygiepp/).
-
-### Getting Started
-1. Clone the [Dygiepp repository](https://github.com/dwadden/dygiepp)
-2. Follow the instructions in [Dygiepp](https://github.com/dwadden/dygiepp) to install required dependencies
-3. Copy files in the [finsearchIE/dyfinie/dygiepp/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/dygiepp/) directory into Dygiepp
+## DyFinIE
+### Installation
+1. Clone the [DyGIE++ Repository](https://github.com/dwadden/dygiepp)
+   ```sh
+   git clone https://github.com/dwadden/dygiepp.git
+   ```
+2. Navigate into DyGIE++ Repository and Install Packages
+    ```sh
+    conda create --name dygiepp python=3.7
+    pip install -r requirements.txt
+    conda develop .   # Adds DyGIE to your PYTHONPATH
+    ```
+3. Copy files in [finsearchIE/dyfinie/dygiepp/](finserachIE/dyfinie/dygiepp/) into DyGIE++ directory
+    ```sh
+    cp finsearchIE/dyfinie/dygiepp/hyperparam_config/finance.json dygiepp/hyperparam_config/finance.json
+    cp -r finsearchIE/dyfinie/dygiepp/scripts/ dygiepp/scripts/
+    ```
+4. Copy FinMechanic Dataset into DyGIE++ directory
+    ```sh
+    cp -r finsearchIE/dyfinie/finmechanic/ dygiepp/
+    ```
 
 ### Model Training
-Navigate to your local Dygiepp root repository.
+1. Navigate to DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+2. Copy FinMechanic Coarse Relaton data into `data/dyfinie_coarse/processed_data/` and Granular Relation data into `data/dyfinie_granular/processed_data/`
+    ```sh
+    # coarse data
+    mkdir data/dyfinie_coarse/processed_data/
+    cp -r finmechanic/coarse/ data/dyfinie_coarse/processed_data/
 
-To prepare the dataset for model training:
-```
-bash scripts/data/get_finance.sh 
-```
+    # granular data
+    mkdir data/dyfinie_granular/processed_data/
+    cp -r finmechanic/granular/ data/dyfinie_granular/processed_data/
+    ```
+3. Navigate into DyGIE++ Repository
+    ```sh
+    cd dygiepp
+    ```
+4. Prepare coarse and granular datasets
+    ```sh
+    bash preprocessing/dyfinie_coarse.sh
+    bash preprocessing/dyfinie_granular.sh
+    ``
+5. Train DyGIE++ models
+    ```sh
+    python scripts/tuning/dyfinie_coarse.py --data_dir data/dyfinie_coarse/normalized_data/ --serial_dir model/dyfinie_coarse/
 
-To train DyGIE++ model:
-```
-python scripts/tuning/(model).py --data_dir (path/to/data/) --serial_dir (path/to/model/)
-```
+    python scripts/tuning/dyfinie_granular.py --data_dir data/dyfinie_granular/normalized_data/ --serial_dir model/dyfinie_granular/
+    ```
 
-To evaluate trained DyGIE++ model: 
-```
-allennlp evaluate \ 
-(path/to/model) \ 
-(path/to/test.json) \ 
---include-package dygie 
-```
+### Model Evaluation
+1. Navigate to DyGIE++ Repository
+    ```sh
+    cd dygiepp
+    ```
+2. Evaluate trained model
+    ```sh
+    # evaluate coarse performance
+    allennlp evaluate \ 
+    data/dyfinie_coarse/ \ 
+    data/dyfinie_coarse/normalized_data/test.json \ 
+    --include-package dygie 
+
+    # evaluate granular performance
+    allennlp evaluate \ 
+    data/dyfinie_granular/ \ 
+    data/dyfinie_granular/normalized_data/test.json \ 
+    --include-package dygie 
+    ```
 
 ### Model Prediction
-```
-allennlp predict \ 
-(path/to/model/) \ 
-(path/to/data/) \ 
---predictor dygie \ 
---include-package dygie \ 
---use-dataset-reader \ 
---output-file (output/to/pred.jsonl) \ 
---silent 
-```
+1. Navigate to DyGIE++ Repository
+    ```sh
+    cd dygiepp
+    ```
+2. Process raw dataset
+    ```sh
+    python scripts/data/shared/normalize.py \
+    (path_to_dataset)/processed_data/json \
+    (path_to_dataset)/normalized_data/json \
+    --file_extension=json \
+    --max_tokens_per_doc=0 \
+    --dataset=$config_name
+    ```
+3. Predict on normalized dataset
+    ```sh
+    allennlp predict \ 
+    (path/to/model/) \  # example: model/dyfinie_coarse or model/dyfinie_granular
+    (path/to/data/) \ 
+    --predictor dygie \ 
+    --include-package dygie \ 
+    --use-dataset-reader \ 
+    --output-file (output/to/pred.jsonl) \ 
+    --silent 
+    ```
 
 ## Baselines
 We provide scripts to generate predictions for baseline models OpenIE and SRL in [finsearchIE/dyfinie/baselines/](finsearchIE/dyfinie/baselines/).
@@ -129,6 +189,45 @@ To generate predictions for OpenIE:
 
 
 ## Evaluation
-- `ie_evaluation.py`: Evaluates performance of information extraction models
-- `ner_model_performance.py`: Code to compare DyFinIE with off-the-shelf NER models
-- `validation_curve_plots.py`: Code to plot validation curves of DyFinIE tuning 
+### Initialisation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/ValaryLim/finsearchIE.git
+   ```
+2. Move into the DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+3. Install Python packages
+    ```sh
+    pip install -r evaluation/requirements.txt
+    ```
+
+### Information Extraction Evaluation
+We provide a [ie_evaluation.py](evaluation/ie_evaluation.py) script to evaluate the performance of the various Information Extraction models. To perform the evaluation:
+
+1. Move into DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+2. Copy prediction files over into `data/predictions/(model)/(name)/(type).jsonl`
+    - `model`: srl, openie or dyfinie
+    - `name`: finmechanic/coarse or finmechanic/granular
+    - `type`: train, dev, or test
+3. Run evaluation script
+    ```sh
+    python evaluation/ie_evaluation.py
+    ```
+
+## Named Entity Recognition Evaluation
+We provide a [ner_evaluation.py](evaluation/ner_evaluation.py) script to evaluate the performance of the various NER models compared to DyFinIE. To perform the evaluation:
+
+1. Move into DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+2. Copy DyFinIE test prediction over into `data/predictions/dyfinie/finmechanic/coarse/test.jsonl`
+3. Run evaluation script
+    ```sh
+    python evaluation/ner_evaluation.py
+    ```

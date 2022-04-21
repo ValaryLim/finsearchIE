@@ -4,24 +4,38 @@ from nltk.tag.stanford import StanfordNERTagger
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from transformers import pipeline
 import pandas as pd
-import os 
-import sys
+from rouge_score import rouge_scorer
 
-# set working directory
-sys.path.append(os.getcwd())
-import utils
+def load_jsonl(file_path):
+    raw_data = []
+    with open(file_path, "r") as f:
+        for line in f:
+            # read line
+            json_line = json.loads(line)
+            raw_data.append(json_line)
+    return raw_data
 
-nlp_spacy = spacy.load("en_core_web_sm")
+def exact_match(span1, span2):
+    return span1.strip().lower() == span2.strip().lower()
 
-tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
-model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
-nlp_bertbasedner = pipeline("ner", model=model, tokenizer=tokenizer)
+def jaccard_similarity(list1, list2):
+    s1 = set(list1)
+    s2 = set(list2)
+    return len(s1.intersection(s2)) / len(s1.union(s2))
 
-PATH_TO_JAR = 'models/stanford-ner/stanford-ner.jar'
-PATH_TO_MODEL = 'models/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
-nlp_stanford = StanfordNERTagger(model_filename=PATH_TO_MODEL,path_to_jar=PATH_TO_JAR, encoding='utf-8')
-
-data = utils.load_jsonl("data/predictions/dygiefinbert/finance/coarse/test.jsonl")
+def span_metric(span1, span2, metric):
+    if metric =="substring":
+        return ((span1 in span2) or (span2 in span1))
+    elif metric =="jaccard":
+        j = jaccard_similarity(span1.split(),span2.split())
+        return (j > 0.5)
+    elif metric =="rouge":
+        scorer = rouge_scorer.RougeScorer(['rouge1'])
+        scores = scorer.score(span1, span2)
+        return (scores['rouge1'].fmeasure > 0.5)
+    elif metric == "exact":
+        return exact_match(span1, span2)
+    return False
 
 def generate_spacy_prediction(abstract_text):
     doc = nlp_spacy(abstract_text)
@@ -77,6 +91,20 @@ def generate_stanford_prediction(abstract_text):
     return stanford_entities
 
 if __name__ == "__main__":
+    # load nlp model
+    nlp_spacy = spacy.load("en_core_web_sm")
+
+    # load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
+    model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
+    nlp_bertbasedner = pipeline("ner", model=model, tokenizer=tokenizer)
+
+    # path to stanford model
+    PATH_TO_JAR = 'models/stanford-ner/stanford-ner.jar'
+    PATH_TO_MODEL = 'models/stanford-ner/classifiers/english.all.3class.distsim.crf.ser.gz'
+    nlp_stanford = StanfordNERTagger(model_filename=PATH_TO_MODEL,path_to_jar=PATH_TO_JAR, encoding='utf-8')
+
+    data = load_jsonl("data/predictions/dyfinie/finmechanic/coarse/test.jsonl")
     scores = {
         (model, metric): { 'tp': 0, 'fp': 0, 'fn': 0 } for metric in ['jaccard', 'rouge', 'substring', 'exact'] 
         for model in ['spacy', 'bert', 'nltk', 'stanford', 'dyfinie']
@@ -121,7 +149,7 @@ if __name__ == "__main__":
                         gold_ent_str = " ".join(abstract_sents[gold_ent[0]:gold_ent[1]+1])
 
                         # compute metric
-                        metric_score = utils.span_metric(pred_ent_str, gold_ent_str, metric)
+                        metric_score = span_metric(pred_ent_str, gold_ent_str, metric)
 
                         if metric_score:
                             corr_ent = True
