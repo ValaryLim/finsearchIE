@@ -4,16 +4,16 @@ import encoder
 
 # load jsonl files
 RAW_PATHS = [
-    "data/predictions/finkb/finance_coarse_coref.jsonl", 
-    "data/predictions/finkb/finance_granular_coref.jsonl"
+    "dyfinie/data/predictions/finkb/coarse.jsonl", 
+    "dyfinie/data/predictions/finkb/granular.jsonl"
 ]
 PROC_PATHS = [
-    "data/finkb/finance_coarse_coref.jsonl", 
-    "data/finkb/finance_granular_coref.jsonl"
+    'finsearch_backend/embedder/finsearch_embedder/data/finkb/coarse.jsonl',
+    'finsearch_backend/embedder/finsearch_embedder/data/finkb/granular.jsonl',
 ]
 SENT_PATHS = [
-    "data/finkb/finance_coarse_sents.json", 
-    "data/finkb/finance_granular_sents.json"
+    "finsearch_backend/embedder/finsearch_embedder/data/finkb/coarse_sents.json", 
+    "finsearch_backend/embedder/finsearch_embedder/data/finkb/granular_sents.json"
 ]
 
 def extract_relations(json_list):
