@@ -41,7 +41,7 @@ We structure our repository as follows:
     │       ├── ie_evaluation.py                # Evaluate information extraction capabilities
     |       └── ner_evaluation.py               # Evaluate named entity recognition capabilities
     ├── finkb                           # FinKB implementation
-    │   ├── finkb_generation.py             # Script to generate embeddings for FinKB
+    │   ├── finkb_generation.py             # Script to generate predictions for FinKB
     |   └── finkb_analysis.py               # Evaluation scripts for FinKB
     ├── finsearch                       # FinSearch Service
     │   ├── README.md                       # Overview of FinSearch Architecture
@@ -51,7 +51,11 @@ We structure our repository as follows:
     │       ├── querier                         # Querier Microservice
     |       |   └── README.md                       # Set-up instructions for Querier Microservice
     |       └── embedder                        # Embedder Microservice
-    |           └── README.md                       # Set-up instructions for Embedder Microservice
+    |           ├── README.md                       # Set-up instructions for Embedder Microservice
+    |           ├── embedding_models                # Scripts to train embedding models
+    |           ├── finkb_embeddings.py             # Generate embeddings for FinKB triplets
+    |           ├── knn_graph_generation.py         # Generate KNN graphs on embeddings for search
+    |           └── finsearch_embedder              # FinSerach embedder application
     ├── utils                           # Utilities folder for scripts
     └── ...
 

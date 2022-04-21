@@ -20,7 +20,7 @@ We have provided more details in our paper.
     |   ├── finmsmarco_training.py              # Script to Train FinMsMarcoQA
     │   └── finmultiqa_training.py              # Script to Train FinMultiQA
     ├── finsearch_embedder                  # Embedder Flask Application
-    ├── finkb_embeddings_generation.py      # Script to Generate Embeddings from FinKB
+    ├── finkb_embeddings.py                 # Script to Generate Embeddings from FinKB
     ├── knn_graph_generation.py             # Script to Generate Graphs from Embeddings
     └── requirements.txt                    # Requirements
 
@@ -49,11 +49,11 @@ We also provide `evaluate_encoder.py`, the script used to evaluate all Encoder m
     ```
 
 ### Generate FinKB Embeddings
-The `finkb_embeddings_generation.py` script generates embeddings for all models. To run the script:
+The `finkb_embeddings.py` script generates embeddings for all models. To run the script:
 1. Transfer the `finance_coarse_coref.jsonl` and `finance_granular_coref.jsonl` relational triplet prediction files into the `finsearch_embedder/data/finkb/` directory.
 2. Run the script
     ```sh
-    python finkb_embeddings_generation.py
+    python finkb_embeddings.py
     ```
 
 ### Generate KNN Graphs from FinKB Embeddings
