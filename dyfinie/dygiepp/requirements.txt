@@ -1,8 +1,0 @@
-allennlp-models==1.1.0
-allennlp-optuna==0.1.6
-jsonpickle==2.0.0
-optuna-dashboard==0.5.0
-pip-chill==1.0.1
-python-levenshtein==0.12.2
-rouge-score==0.0.4
-twint==2.1.21

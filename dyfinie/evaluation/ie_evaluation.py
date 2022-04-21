@@ -2,17 +2,15 @@ import json
 import random
 import itertools
 from scipy import stats
-import pandas as pd
 from pathlib import Path
 from relation_metric import SpanRelationMetrics, TokenRelationMetrics
 
 if __name__ == "__main__":
     n_sets = 10
     pred_directories = {
-        "openie": {"dataset_names": ["finance/coarse", "finance/granular", "external_zhiren/coarse", "external_zhiren/granular"], "prob":False},
-        "srl": {"dataset_names": ["finance/coarse", "finance/granular", "external_zhiren/coarse", "external_zhiren/granular"], "prob":False},
-        "dygiebert": {"dataset_names": ["finance/coarse", "finance/granular", "finance/coarse_coref", "finance/granular_coref", "external_zhiren/coarse", "external_zhiren/granular"], "prob":False},
-        "dygiefinbert": {"dataset_names": ["finance/coarse", "finance/granular", "external_zhiren/coarse", "external_zhiren/granular"], "prob":False}
+        "openie": {"dataset_names": ["finmechanic/coarse", "finmechanic/granular"], "prob":False},
+        "srl": {"dataset_names": ["finmechanic/coarse", "finmechanic/granular"], "prob":False},
+        "dyfinie": {"dataset_names": ["finmechanic/coarse", "finmechanic/granular"], "prob":False},
     }
 
     dataset_types = ["train", "dev", "test"]
