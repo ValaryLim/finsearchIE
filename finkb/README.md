@@ -43,21 +43,22 @@ conda create -n finkb python=3.9
     ```
 
 ## Generate FinKB
-This step calls the prediction model on the full financial corpus to generate FinKB.
-```
-python generate_finkb.py
-```
-1. Move into the FinKB directory
+1. Move into the FinSearch directory
     ```sh
-    cd finsearchIE/finkb/
+    cd finsearchIE
     ```
-2. Run FINKB generation script
+2. Run FinKB generation script
     ```sh
-    python finkb_generation.py
+    python finkb/finkb_generation.py
     ```
 
-## Evaluate FinKB
-Evaluation function to compare performance of different embedding models.
-```
-python evaluate_encoder.py
-```
+## Analyse FinKB
+We provide an analysis script to compute basic statistics (number of relations, number of words per entity). To run the script:
+1. Move into the FinSearch directory
+    ```sh
+    cd finsearchIE
+    ```
+2. Run FinKB generation script
+    ```sh
+    python finkb/finkb_analysis.py
+    ```
