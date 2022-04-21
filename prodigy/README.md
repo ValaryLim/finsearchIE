@@ -70,7 +70,7 @@ We provide a Python script, [prodigy_processing.py](prodigy_processing.py), to f
     ```
     For example, for FinMechanic, we run:
     ```sh
-    python prodigy/prodigy_processing.py prodigy/data/finmechanic_raw.jsonl prodigy/data/finmechanic_processed.jsonl
+    python prodigy/prodigy_processing.py prodigy/data/finmechanic_raw.jsonl prodigy/data/
     ```
 
 ## Loading Annotated/Predicted Relation Data
@@ -86,7 +86,7 @@ To load predictions from DyFinIE into Prodigy:
     ```
 2. Call [prodigy_formatting.py](prodigy_formatting.py) script
     ```sh
-    python prodigy/prodigy_formatting.py (prediction_file.json) (formatted_prediction_file.jsonl)
+    python prodigy/prodigy_formatting.py (prediction_file.json) (raw_file.jsonl) (formatted_file_path)
     ```
 3. Load formatted file into Prodigy
     ```sh
