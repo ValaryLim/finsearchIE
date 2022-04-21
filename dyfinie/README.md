@@ -1,4 +1,28 @@
-# DyFinIE
+# DyFinIE: Financial Extraction
+This directory contains information on how we train DyFinIE, generate predictions for DyFinIE and baselines, and evaluate the results.
+
+## Table of Contents
+- [Directory Structure](#directory-structure)
+- [DyFinIE](#dyfinie)
+    - [DyFinIE Training](#dyfinie-training)
+    - [DyFinIE Prediction](#dyfinie-prediction)
+- [Baselines](#baselines)
+    - [OpenIE]#openie)
+    - [SRL](#srl)
+- [Evaluation](#evaluation)
+
+## Directory Structure
+
+    .
+    ├── dygiepp                     # Information on Training and Predicting with DyFinIE    
+    ├── baselines                   # Information on Predicting with Baseline Models
+    │   ├── openie                      # OpenIE Predictions
+    │   └── srl                         # SRL Predictions
+    ├── evaluation                  # Evaluation scripts
+    │   ├── insert eval scripts here
+    │   └── insert eval scripts here
+    └── finmechanic                 # Dataset Used to Train DyFinIE
+
 ## DyFinIE Training (Dygiepp)
 We provide scripts and configurations to train DyFinIE in [finsearchIE/dyfinie/dygiepp/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/dygiepp/).
 
@@ -41,12 +65,68 @@ allennlp predict \
 ```
 
 ## Baselines
-We provide scripts to generate predictions for baseline models OpenIE, SRL, and ReLogic (Deprecated) in [finsearchIE/dyfinie/baselines/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/baselines/). 
+We provide scripts to generate predictions for baseline models OpenIE and SRL in [finsearchIE/dyfinie/baselines/](finsearchIE/dyfinie/baselines/).
 
-To run the baseline models:
-1. Move into [finsearchIE/dyfinie/baselines/](https://github.com/ValaryLim/finsearchIE/tree/main/dyfinie/baselines/) directory
-2. `pip install -r (model)_requirements.txt`
-3. `python (model)_prediction.py`
+### OpenIE
+#### Installation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/ValaryLim/finsearchIE.git
+   ```
+2. Move into the DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+3. Install Python packages
+    ```sh
+    pip install -r baselines/openie/requirements.txt
+    ```
+
+### Generate Predictions
+To generate predictions for OpenIE:
+1. Move into the DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+2. Call prediction script
+    ```sh
+    python baselines/openie/openie_prediction.py '(raw_file_path.json)' '(pred_data_path/)'
+    ```
+    For example, to predict on FinMechanic's Coarse Test dataset, we call:
+    ```sh
+    python baselines/openie/openie_prediction.py 'finmechanic/coarse/test.json' 'data/pred/openie'
+    ```
+
+### SRL
+#### Installation
+1. Clone the repository
+   ```sh
+   git clone https://github.com/ValaryLim/finsearchIE.git
+   ```
+2. Move into the DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+3. Install Python packages
+    ```sh
+    pip install -r baselines/srl/requirements.txt
+    ```
+
+### Generate Predictions
+To generate predictions for OpenIE:
+1. Move into the DyFinIE directory
+    ```sh
+    cd finsearchIE/dyfinie/
+    ```
+2. Call prediction script
+    ```sh
+    python baselines/srl/srl_prediction.py '(raw_file_path.json)' '(pred_data_path/)'
+    ```
+    For example, to predict on FinMechanic's Coarse Test dataset, we call:
+    ```sh
+    python baselines/srl/srl_prediction.py 'finmechanic/coarse/test.json' 'data/pred/srl'
+    ```
+
 
 ## Evaluation
 - `ie_evaluation.py`: Evaluates performance of information extraction models

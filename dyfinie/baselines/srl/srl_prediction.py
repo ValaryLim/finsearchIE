@@ -1,7 +1,8 @@
 '''
-OpenIE (Baseline) Prediction Pipeline
+SRL (Baseline) Prediction Pipeline
 '''
 import os
+import sys
 import tqdm
 import json
 import itertools
@@ -97,73 +98,71 @@ def format_pred_tags(gold_toks, pred_toks, pred_tags):
 
     return cleaned_tags
 
-
-def save_json(file_path, abstract_list):
+def save_jsonl(file_path, data_list):
     with open(file_path, "w") as f:
-        for abstract in abstract_list:
-            print(json.dumps(abstract), file=f)
-
-def generate_predictions(model_name, predictor):
-    # retrieve list of jsonfiles 
-    dataset_names = ["finance/coarse", "finance/granular", "external_zhiren/coarse", "external_zhiren/granular"]
-    dataset_types = ["train", "dev", "test"]
-
-    for dname, dtype in itertools.product(dataset_names,dataset_types):
-        # read jsonfile
-        path = f"data/prodigy_processed/{dname}/{dtype}.json"
-        if not Path(path).exists():
-            continue
-        pred_path = f"data/predictions/{model_name}/{dname}/{dtype}.jsonl"
-
-        with open(path, "r") as json_file:
-            json_list = list(json_file)
-        
-        preds = []
-        # predict for each abstract
-        for json_row in tqdm.tqdm(json_list):
-            abstract = json.loads(json_row)
-            predicted_ner, predicted_relations = [], []
-            # extract sentences
-            sentences_tok = abstract["sentences"]
-            sentences_str = [" ".join(x) for x in sentences_tok]
-            sentences_len = [0] + [len(x) for x in sentences_tok]
-            sentences_len_cumsum = list(np.cumsum(sentences_len))
-
-            for i in range(len(sentences_tok)):
-                sentence = sentences_str[i]
-                gold_tok = sentences_tok[i]
-                shift = sentences_len_cumsum[i]
-
-                # predict
-                pred_sentence = predictor.predict(sentence=sentence)
-                pred_tok = pred_sentence['words']
-
-                # extract relations 
-                cleaned_relations = []
-                for relation in pred_sentence["verbs"]:
-                    pred_rel_tags = relation["tags"]
-                    pred_rel_tags = format_pred_tags(gold_tok, pred_tok, pred_rel_tags)
-                    cleaned_relations.append(pred_rel_tags)
-
-                sentence_ner, sentence_relations = extract_ner_relations(cleaned_relations, shift = shift)
-
-                predicted_ner.append(sentence_ner)
-                predicted_relations.append(sentence_relations)
-                
-            row_pred = {
-                "doc_key": abstract["doc_key"],
-                "dataset": '_'.join(dname.split('/')),
-                "sentences": abstract["sentences"],
-                "ner": abstract["ner"],
-                "relations": abstract["relations"],
-                "predicted_ner": predicted_ner,
-                "predicted_relations": predicted_relations
-            }
-            preds.append(row_pred)
-        
-        make_dir(f"data/predictions/{model_name}/{dname}/")
-        save_json(pred_path, preds)
+        for data in data_list:
+            print(json.dumps(data), file=f)
 
 if __name__ == "__main__":
-    predictor = Predictor.from_path("https://storage.googleapis.com/allennlp-public-models/openie-model.2020.03.26.tar.gz")
-    generate_predictions(model_name="openie", predictor=predictor)
+    predictor = Predictor.from_path("https://storage.googleapis.com/allennlp-public-models/structured-prediction-srl-bert.2020.12.15.tar.gz")
+
+    # retrieve data
+    raw_json_file = sys.argv[1]
+    pred_data_path = sys.arg[2]
+
+    # create directory for prediction
+    make_dir(pred_data_path)
+
+    # generate pred_data_file name
+    pred_data_file = f"{pred_data_path}/{raw_json_file.split('/')[-1]}l"
+
+    # read json file
+    with open(path, "r") as json_file:
+        json_list = list(json_file)
+
+    preds = []
+    # predict for each abstract
+    for json_row in tqdm.tqdm(json_list):
+        abstract = json.loads(json_row)
+        predicted_ner, predicted_relations = [], []
+        # extract sentences
+        sentences_tok = abstract["sentences"]
+        sentences_str = [" ".join(x) for x in sentences_tok]
+        sentences_len = [0] + [len(x) for x in sentences_tok]
+        sentences_len_cumsum = list(np.cumsum(sentences_len))
+
+        for i in range(len(sentences_tok)):
+            sentence = sentences_str[i]
+            gold_tok = sentences_tok[i]
+            shift = sentences_len_cumsum[i]
+
+            # predict
+            pred_sentence = predictor.predict(sentence=sentence)
+            pred_tok = pred_sentence['words']
+
+            # extract relations 
+            cleaned_relations = []
+            for relation in pred_sentence["verbs"]:
+                pred_rel_tags = relation["tags"]
+                pred_rel_tags = format_pred_tags(gold_tok, pred_tok, pred_rel_tags)
+                cleaned_relations.append(pred_rel_tags)
+
+            sentence_ner, sentence_relations = extract_ner_relations(cleaned_relations, shift = shift)
+
+            predicted_ner.append(sentence_ner)
+            predicted_relations.append(sentence_relations)
+            
+        row_pred = {
+            "doc_key": abstract["doc_key"],
+            "dataset": '_'.join(dname.split('/')),
+            "sentences": abstract["sentences"],
+            "ner": abstract["ner"],
+            "relations": abstract["relations"],
+            "predicted_ner": predicted_ner,
+            "predicted_relations": predicted_relations
+        }
+        preds.append(row_pred)
+    
+    save_jsonl(pred_data_file, preds)
+
+
